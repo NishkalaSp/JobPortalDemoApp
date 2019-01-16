@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
@@ -15,5 +16,7 @@ namespace DataLayer
         {
                 
         }
+
+        public DbSet<JobType> JobTypes { get; set; }
     }
 }

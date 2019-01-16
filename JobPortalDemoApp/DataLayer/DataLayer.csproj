@@ -49,6 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Entities\EducationDetails.cs" />
+    <Compile Include="Entities\JobDetails.cs" />
+    <Compile Include="Entities\JobType.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="JPDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

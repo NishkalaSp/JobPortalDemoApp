@@ -1,5 +1,6 @@
 namespace DataLayer.Migrations
 {
+    using DataLayer.Entities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -18,6 +19,11 @@ namespace DataLayer.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
+            context.JobTypes.AddOrUpdate(j => j.Id,
+                new JobType() { Name = "Full-Time"},
+                new JobType() { Name = "Correspondence" }
+                );
         }
     }
 }
