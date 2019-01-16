@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobPortalDemoApp", "JobPortalDemoApp\JobPortalDemoApp.csproj", "{D97FC981-B72C-49C7-B2C2-496677DB92A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{123D19F3-0E14-4B35-A5FD-E70AD5FA17BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D97FC981-B72C-49C7-B2C2-496677DB92A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D97FC981-B72C-49C7-B2C2-496677DB92A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D97FC981-B72C-49C7-B2C2-496677DB92A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D97FC981-B72C-49C7-B2C2-496677DB92A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{123D19F3-0E14-4B35-A5FD-E70AD5FA17BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{123D19F3-0E14-4B35-A5FD-E70AD5FA17BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{123D19F3-0E14-4B35-A5FD-E70AD5FA17BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{123D19F3-0E14-4B35-A5FD-E70AD5FA17BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7263696D-2C1C-484C-8EB8-5977F4800C3C}
+	EndGlobalSection
+EndGlobal
