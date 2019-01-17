@@ -10,14 +10,31 @@ namespace DataLayer.Entities
     {
         public int Id { get; set; }
 
-        public string Education { get; set; }
+        public User Seeker { get; set; }
+
+        public string CertificateOrDegreeName { get; set; }
+
+        public string InstituteOrUniversityName { get; set; }
+
+        public string MajorBranch { get; set; }
+
+        public decimal Percentage { get; set; }
+
+        public EducationType Type { get; set; }
+
+        
+
+        
+
+        //public string State { get; set; }
+
+        //public string City { get; set; }
+    }
+
+    class EducationType
+    {
+        public int Id { get; set; }
 
         public string Type { get; set; }
-
-        public string CollegeOrUniversityName { get; set; }
-
-        public decimal Aggregate { get; set; }
-
-        public string Location { get; set; }
     }
 }

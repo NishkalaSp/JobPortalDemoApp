@@ -18,5 +18,15 @@ namespace DataLayer
         }
 
         public DbSet<JobType> JobTypes { get; set; }
+
+        public DbSet<EducationType> EducationTypes { get; set; }
+
+        public DbSet<UserType> UserTypes { get; set; }
+
+        public DbSet<User> User { get; set; }
+
+        public DbSet<ExperienceDetails> ExperienceDetails { get; set; }
+
+        public DbSet<EducationDetails> EducationDetails { get; set; }
     }
 }

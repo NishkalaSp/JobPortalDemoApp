@@ -21,8 +21,18 @@ namespace DataLayer.Migrations
             //  to avoid creating duplicate seed data.
 
             context.JobTypes.AddOrUpdate(j => j.Id,
-                new JobType() { Name = "Full-Time"},
-                new JobType() { Name = "Correspondence" }
+                new JobType() { Type = "Full-Time"},
+                new JobType() { Type = "Contract" }
+                );
+
+            context.EducationTypes.AddOrUpdate( e => e.Id,
+                new EducationType() { Type = "Full-Time" },
+                new EducationType() { Type = "Correspondence" } 
+                );
+
+            context.UserTypes.AddOrUpdate( u => u.Id,
+                new UserType() { Type = "HR" },
+                new UserType() { Type = "JobSeeker" }
                 );
         }
     }
