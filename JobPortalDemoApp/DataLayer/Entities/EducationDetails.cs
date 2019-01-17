@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Entities
 {
-    class EducationDetails
+    public class EducationDetails
     {
         public int Id { get; set; }
 
@@ -31,7 +31,7 @@ namespace DataLayer.Entities
         //public string City { get; set; }
     }
 
-    class EducationType
+    public class EducationType
     {
         public int Id { get; set; }
 

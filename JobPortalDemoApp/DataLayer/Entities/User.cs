@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Entities
 {
-    class User
+    public class User
     {
         public int Id { get; set; }
 
@@ -17,6 +17,8 @@ namespace DataLayer.Entities
         public string LastName { get; set; }
 
         public string Email { get; set; }
+
+        public string Password { get; set; }
 
         public string ContactNumber { get; set; }
 
