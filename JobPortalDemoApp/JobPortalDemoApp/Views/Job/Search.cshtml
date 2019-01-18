@@ -5,3 +5,75 @@
 
 <h2>Search</h2>
 
+<div>
+    <input type="text" placeholder="Name" id="search-box" />
+    <button id="search-btn">Search</button>
+
+    <div id="searchResultContainer" style="display:none;">
+        <h4>Search Results:</h4>
+        <table id="searchTable" class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>FullName</th>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+
+    <script>
+        var searchBox = $("#search-box");
+        var searchResultContainer = $("#searchResultContainer");
+        var searchTable = $("#searchTable");
+        var searchGrid;
+
+        $("#search-btn").on("click", function () {
+            var searchText = searchBox.val();
+
+            if (!searchTable.hasClass("dataTable")) {
+                createDataTable();
+            }
+            else {
+                searchGrid.fnDraw();
+            }
+            
+            searchResultContainer.show();
+        });
+
+        var createDataTable = function () {
+
+            searchGrid = searchTable.dataTable({
+                "sDom": '',
+                "ajax": {
+                    "url": "/Job/GetGridData",
+                    "type": "GET",
+                    "datatype": "json",
+                    "data": { "searchString": searchBox.val() }
+                },
+                "serverSide": true,
+                //"fnServerData": function (sSource, aoData, fnCallback) {
+                //    aoData.push({ "name": "searchString", "value": searchBox.val() });
+                //    $.getJSON(sSource, aoData, function (json) {
+                //        fnCallback(json)
+                //    });
+                //},
+                "columns": [
+                    { "data": "Id", "autoWidth": "true" },
+                    { "data": "FullName", "autoWidth": "true" },
+                    { "data": "Email", "autoWidth": "true" },
+                    { "data": "ContactNumber", "autoWidth": "true" }
+                ]
+            });
+        };
+
+    </script>
+    
+}
+
