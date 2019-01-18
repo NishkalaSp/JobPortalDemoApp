@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    class JPDbContext : DbContext
+    public class JPDbContext : DbContext
     {
         public JPDbContext()
             : base(ConfigurationManager.ConnectionStrings["JPDbConnectionString"].ConnectionString)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Entities
 {
-    class ExperienceDetails
+    public class ExperienceDetails
     {
         public int Id { get; set; }
 
