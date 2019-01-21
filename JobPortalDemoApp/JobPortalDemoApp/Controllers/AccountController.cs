@@ -55,6 +55,22 @@ namespace JobPortalDemoApp.Controllers
             return View(login);
         }
 
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(RegisterFormModel registerFormModel)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+
+            return View(registerFormModel);
+        }
+
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
