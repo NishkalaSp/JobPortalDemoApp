@@ -1,4 +1,5 @@
-﻿using JobPortalDemoApp.Common;
+﻿using DataLayer.Entities;
+using JobPortalDemoApp.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -34,5 +35,14 @@ namespace JobPortalDemoApp.Models
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [MaxDate(ErrorMessage = "DOB cannot be greater than today's date.")]
         public DateTime DOB { get; set; }
+
+        public EducationDetails EducationDetails { get; set; }
+
+        public ExperienceDetails[] ExperienceDetails { get; set; }
+
+        public RegisterFormModel()
+        {
+            //WorkExperienceList = new List<ExperienceDetails>();
+        }
     }
 }
