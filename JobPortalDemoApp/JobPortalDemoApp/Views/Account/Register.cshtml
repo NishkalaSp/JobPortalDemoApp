@@ -56,19 +56,20 @@
 </head>
 <body>
     <div class="container">
-    <h2>Register</h2>
-    <div class="tab">
-        <button class="tablinks" onclick="openTabContent(event, 'personal-detail')" id="defaultOpen">Personal Details</button>
-        <button class="tablinks" onclick="openTabContent(event, 'education-detail')">Education Details</button>
-        <button class="tablinks" onclick="openTabContent(event, 'work-experience-detail')">Work Experience Details</button>
-    </div>
-
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        <h2>Register</h2>
+        <div class="tab">
+            <button class="tablinks" onclick="openTabContent(event, 'personal-detail')" id="defaultOpen">Personal Details</button>
+            <button class="tablinks" onclick="openTabContent(event, 'education-detail')">Education Details</button>
+            <button class="tablinks" onclick="openTabContent(event, 'work-experience-detail')">Work Experience Details</button>
+        </div>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+
         @*-------Personal details tab content-------*@
         <div id="personal-detail" class="tabcontent">
             <h3>Personal Details</h3>
             <div>
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -111,28 +112,76 @@
                         @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+
+
             </div>
         </div>
 
         @*-------Education Details tab content-------*@
         <div id="education-detail" class="tabcontent">
             <h3>Education Details</h3>
-            <p></p>
+
+            @{
+                var qualifications = new List<SelectListItem>();
+                qualifications.Add(new SelectListItem()
+                {
+                    Text = "PHD",
+                    Value = "PHD"
+                });
+                qualifications.Add(new SelectListItem()
+                {
+                    Text = "Masters",
+                    Value = "Masters"
+                });
+
+                var educationTypes = new List<SelectListItem>();
+                educationTypes.Add(new SelectListItem() { Text = "Full-Time", Value = "1" });
+                educationTypes.Add(new SelectListItem() { Text = "Correspondence", Value = "2" });
+
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EducationDetails.CertificateOrDegreeName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.EducationDetails.CertificateOrDegreeName,
+              qualifications,
+              "--Select Qualification--",
+              new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EducationDetails.InstituteOrUniversityName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EducationDetails.InstituteOrUniversityName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EducationDetails.InstituteOrUniversityName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EducationDetails.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.EducationDetails.Type,
+              educationTypes,
+              "--Select Education Type--",
+              new { @class = "form-control" })
+                </div>
+            </div>
         </div>
 
         @*-------Work Experience Details tab content-------*@
         <div id="work-experience-detail" class="tabcontent">
             <h3>Work Experience Details</h3>
             <div>
+
                 <button class="btn btn-primary" id="add-work-exp-btn">Add Company</button>
                 <div id="items"></div>
             </div>
         </div>
-    
         <button type="submit" class="btn btn-primary pull-right">Register</button>
-    }
 
-        
+}
+
+
     </div>
 
     <script src="~/Scripts/jquery-1.12.4.min.js"></script>
@@ -160,7 +209,31 @@
         $("#defaultOpen").click();
 
         $(".date-picker").datepicker();
+        var count = 0;
+        $("#add-work-exp-btn").on("click", function (e) {
+            e.preventDefault();
+            $("#items").append("<div><label>Company Name:</label><input type='text' name='ExperienceDetails[" + count + "].CompanyName' />" +
+                "<label>Job Title</label><input type='text' name='ExperienceDetails[" + count + "].JobTitle' />" +
+                "<label>Start date</label><input type='text' name='ExperienceDetails[" + count + "].StartDate' class='datepicker' />" +
+                "<label>End date</label><input type='text' name='ExperienceDetails[" + count + "].EndDate' class='datepicker' />" +
+                "</div>");
+            count++;
+           
+            @*$.ajax({
+                type: 'post',
+                url: '@Url.Action("GetWorkExperienceView", "Account")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: "html",
+                success: function (data) {
+                    alert(data);
+                    $("#items").append(data);
+                }
+            });*@
 
+            //$("#items").append("<div><label>Company Name:</label><input type='text' name='ExperienceDetails.CompanyName' />" +
+            //    "<label>Job Title</label><input type='text' name='ExperienceDetails.JobTitle' />" +
+            //    "</div>");
+        });
         
     </script>
     

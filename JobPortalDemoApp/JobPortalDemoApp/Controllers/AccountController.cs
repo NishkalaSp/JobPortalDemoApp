@@ -61,15 +61,21 @@ namespace JobPortalDemoApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterFormModel registerFormModel)
+        public ActionResult Register(RegisterFormModel rfm, string[] companyName, string[] jobTitle)
         {
             if (ModelState.IsValid)
             {
-
+                //save to db
+                return View("");
             }
 
-            return View(registerFormModel);
+            return View();
         }
+
+        //public ActionResult GetWorkExperienceView()
+        //{
+        //    return PartialView("_WorkExpDetailView");
+        //}
 
         public ActionResult LogOut()
         {

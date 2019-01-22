@@ -1,0 +1,35 @@
+﻿@model JobPortalDemoApp.Models.RegisterWorkExperienceDetailForm
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register Form</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <h3>Work Experience Details</h3>
+        <div>
+            @using (Html.BeginForm("RegisterWorkExperienceDetailForm", "Account", FormMethod.Post))
+            {
+                <button class="btn btn-primary" id="add-work-exp-btn">Add Company</button>
+                <div id="items"></div>
+                <input type="submit" value="submit"/>
+            }
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script>
+        $("#add-work-exp-btn").on("click", function () {
+            $("#items").append("<div><label>Company Name:</label><input type='text' name='CompanyName' /></div>");
+        });
+    </script>
+</body>
+</html>

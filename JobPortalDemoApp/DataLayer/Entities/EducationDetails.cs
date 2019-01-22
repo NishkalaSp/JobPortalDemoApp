@@ -37,4 +37,6 @@ namespace DataLayer.Entities
 
         public string Type { get; set; }
     }
+
+    
 }

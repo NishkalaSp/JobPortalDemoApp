@@ -405,6 +405,7 @@
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterFormModel.cs" />
+    <Compile Include="Models\RegisterWorkExperienceDetailForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -419,6 +420,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Job\Search.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\RegisterPersonalDetailFormView.cshtml" />
+    <Content Include="Views\Account\RegisterWorkExperienceDetailView.cshtml" />
+    <Content Include="Views\Account\_WorkExpDetailView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
