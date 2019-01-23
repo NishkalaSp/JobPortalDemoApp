@@ -3,6 +3,7 @@ using DataLayer.Entities;
 using JobPortalDemoApp.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -61,15 +62,42 @@ namespace JobPortalDemoApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterFormModel rfm, string[] companyName, string[] jobTitle)
+        public ActionResult Register(RegisterFormModel rfm)
         {
             if (ModelState.IsValid)
             {
-                //save to db
-                return View("");
-            }
+                if (!IsResumeFileExtensionValid(rfm.ResumeFile))
+                {
+                    ModelState.AddModelError("ResumeFile", "File with extension .txt, .doc, .docx or .pdf is allowed.");
+                    return View(rfm);
+                }
 
-            return View();
+                SaveFile(rfm.ResumeFile, rfm.Name);
+                //save to db
+                return RedirectToAction("Index", "Home");
+            }
+            
+            return View(rfm);
+        }
+
+        private bool IsResumeFileExtensionValid(HttpPostedFileBase resumeFile)
+        {
+            var allowedExtensions = new string[]{ ".txt", ".doc", ".docx", ".pdf"};
+            var fileExtension = System.IO.Path.GetExtension(resumeFile.FileName);
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void SaveFile(HttpPostedFileBase resumeFile, string name) //void or bool?
+        {
+            var fileExtension = System.IO.Path.GetExtension(resumeFile.FileName);
+            var uploadUrl = Server.MapPath("~/Content/Resumes");
+            var fileName = DateTime.Now.ToString("yyyymmddMMss") + name + fileExtension;
+            resumeFile.SaveAs(Path.Combine(uploadUrl, fileName));
+            return;
         }
 
         //public ActionResult GetWorkExperienceView()

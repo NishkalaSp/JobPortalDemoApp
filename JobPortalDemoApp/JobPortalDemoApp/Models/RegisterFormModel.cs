@@ -36,6 +36,9 @@ namespace JobPortalDemoApp.Models
         [MaxDate(ErrorMessage = "DOB cannot be greater than today's date.")]
         public DateTime DOB { get; set; }
 
+        [Required]
+        public HttpPostedFileBase ResumeFile { get; set; }
+
         public EducationDetails EducationDetails { get; set; }
 
         public ExperienceDetails[] ExperienceDetails { get; set; }

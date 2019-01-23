@@ -62,7 +62,7 @@
             <button class="tablinks" onclick="openTabContent(event, 'education-detail')">Education Details</button>
             <button class="tablinks" onclick="openTabContent(event, 'work-experience-detail')">Work Experience Details</button>
         </div>
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id="register-form", enctype = "multipart/form-data" }))
     {
 
         @*-------Personal details tab content-------*@
@@ -112,7 +112,13 @@
                         @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
+                <div class="form-group">
+                    @Html.Label("Upload Resume", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.ResumeFile, new { @class = "form-control", type = "file", accept = ".doc,.docx,.pdf,.txt" })
+                        @Html.ValidationMessageFor(model => model.ResumeFile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
 
             </div>
@@ -212,13 +218,17 @@
         var count = 0;
         $("#add-work-exp-btn").on("click", function (e) {
             e.preventDefault();
-            $("#items").append("<div><label>Company Name:</label><input type='text' name='ExperienceDetails[" + count + "].CompanyName' />" +
+            $("#items").append("<div><label>Company Name:</label><input type='text' name='ExperienceDetails[" + count + "].CompanyName' data-val='true' data-val-required='Please enter company name' />" +
+                "<span class='field-validation-valid text-danger' data-valmsg-for='ExperienceDetails[" + count + "].CompanyName' data-valmsg-replace='true'></span>" +
                 "<label>Job Title</label><input type='text' name='ExperienceDetails[" + count + "].JobTitle' />" +
-                "<label>Start date</label><input type='text' name='ExperienceDetails[" + count + "].StartDate' class='datepicker' />" +
-                "<label>End date</label><input type='text' name='ExperienceDetails[" + count + "].EndDate' class='datepicker' />" +
+                "<label>Start date</label><input type='text' name='ExperienceDetails[" + count + "].StartDate' id='ExperienceDetails[" + count + "].StartDate' class='customDate'/>" +
+                "<label>End date</label><input type='text' name='ExperienceDetails[" + count + "].EndDate' id='ExperienceDetails[" + count + "].EndDate' class='customDate' />" +
                 "</div>");
+            
+            $('.customDate').datepicker();
+            $("form").removeData("validator").removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse("form");
             count++;
-           
             @*$.ajax({
                 type: 'post',
                 url: '@Url.Action("GetWorkExperienceView", "Account")',
