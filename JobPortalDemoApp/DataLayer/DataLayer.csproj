@@ -51,6 +51,7 @@
     <Compile Include="Entities\EducationDetails.cs" />
     <Compile Include="Entities\ExperienceDetails.cs" />
     <Compile Include="Entities\JobType.cs" />
+    <Compile Include="Entities\Skill.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="JPDbContext.cs" />
     <Compile Include="Migrations\201901170829050_initial.cs" />
@@ -64,6 +65,18 @@
     <Compile Include="Migrations\201901231224524_AddedResumeFileNamePropToUserEntity.cs" />
     <Compile Include="Migrations\201901231224524_AddedResumeFileNamePropToUserEntity.Designer.cs">
       <DependentUpon>201901231224524_AddedResumeFileNamePropToUserEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240823227_AddedSkillEntityAndSkillListPropToExpEntity.cs" />
+    <Compile Include="Migrations\201901240823227_AddedSkillEntityAndSkillListPropToExpEntity.Designer.cs">
+      <DependentUpon>201901240823227_AddedSkillEntityAndSkillListPropToExpEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240837254_ChangedPropInExpTable.cs" />
+    <Compile Include="Migrations\201901240837254_ChangedPropInExpTable.Designer.cs">
+      <DependentUpon>201901240837254_ChangedPropInExpTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901241048056_AddedExpDetailsListAsPropToSkillTable.cs" />
+    <Compile Include="Migrations\201901241048056_AddedExpDetailsListAsPropToSkillTable.Designer.cs">
+      <DependentUpon>201901241048056_AddedExpDetailsListAsPropToSkillTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +94,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901231224524_AddedResumeFileNamePropToUserEntity.resx">
       <DependentUpon>201901231224524_AddedResumeFileNamePropToUserEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240823227_AddedSkillEntityAndSkillListPropToExpEntity.resx">
+      <DependentUpon>201901240823227_AddedSkillEntityAndSkillListPropToExpEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240837254_ChangedPropInExpTable.resx">
+      <DependentUpon>201901240837254_ChangedPropInExpTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901241048056_AddedExpDetailsListAsPropToSkillTable.resx">
+      <DependentUpon>201901241048056_AddedExpDetailsListAsPropToSkillTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

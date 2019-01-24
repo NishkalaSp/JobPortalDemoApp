@@ -74,10 +74,19 @@ namespace JobPortalDemoApp.Controllers
 
                 SaveFile(rfm.ResumeFile, rfm.Name);
                 //save to db
+                SaveUser(rfm);
                 return RedirectToAction("Index", "Home");
             }
-            
+            SaveUser(rfm);
             return View(rfm);
+        }
+
+        private void SaveUser(RegisterFormModel rfm)
+        {
+            _context.ExperienceDetails.AddRange(rfm.ExperienceDetails);
+            _context.SaveChanges();
+
+            
         }
 
         private bool IsResumeFileExtensionValid(HttpPostedFileBase resumeFile)
@@ -100,10 +109,12 @@ namespace JobPortalDemoApp.Controllers
             return;
         }
 
-        //public ActionResult GetWorkExperienceView()
-        //{
-        //    return PartialView("_WorkExpDetailView");
-        //}
+        public ActionResult GetWorkExperienceView(int count)
+        {
+            ViewBag.Count = count;
+            ViewBag.SkillList = _context.Skills.ToList();
+            return PartialView("_WorkExpDetailView");
+        }
 
         public ActionResult LogOut()
         {

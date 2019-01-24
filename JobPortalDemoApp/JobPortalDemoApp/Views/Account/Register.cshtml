@@ -53,6 +53,7 @@
         display: none;
     }
 </style>
+    <link href="~/Content/themes/base/chosen.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -178,7 +179,7 @@
         <div id="work-experience-detail" class="tabcontent">
             <h3>Work Experience Details</h3>
             <div>
-
+                
                 <button class="btn btn-primary" id="add-work-exp-btn">Add Company</button>
                 <div id="items"></div>
             </div>
@@ -197,6 +198,7 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/maxdate.js"></script>
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
     <script>
         var openTabContent = function (evt, detailSection) {
             var i, tabcontent, tablinks;
@@ -218,17 +220,40 @@
         var count = 0;
         $("#add-work-exp-btn").on("click", function (e) {
             e.preventDefault();
-            $("#items").append("<div><label>Company Name:</label><input type='text' name='ExperienceDetails[" + count + "].CompanyName' data-val='true' data-val-required='Please enter company name' />" +
-                "<span class='field-validation-valid text-danger' data-valmsg-for='ExperienceDetails[" + count + "].CompanyName' data-valmsg-replace='true'></span>" +
-                "<label>Job Title</label><input type='text' name='ExperienceDetails[" + count + "].JobTitle' />" +
-                "<label>Start date</label><input type='text' name='ExperienceDetails[" + count + "].StartDate' id='ExperienceDetails[" + count + "].StartDate' class='customDate'/>" +
-                "<label>End date</label><input type='text' name='ExperienceDetails[" + count + "].EndDate' id='ExperienceDetails[" + count + "].EndDate' class='customDate' />" +
-                "</div>");
-            
-            $('.customDate').datepicker();
-            $("form").removeData("validator").removeData("unobtrusiveValidation");
-            $.validator.unobtrusive.parse("form");
-            count++;
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("GetWorkExperienceView", "Account")',
+                data: { count: count },
+                //contentType: 'application/json; charset=utf-8',
+                dataType: "html",
+                success: function (data) {
+                    alert(data);
+                    $("#items").append(data);
+                    $('.customDate').datepicker();
+                    $(".chosen-select").chosen({ width: "95%" });
+                    $("form").removeData("validator").removeData("unobtrusiveValidation");
+                    $.validator.unobtrusive.parse("form");
+
+                    count++;
+                }
+            });
+            //$("#items").append("<div><label class='control-label col-md-2'>Company Name:</label><input type='text' name='ExperienceDetails[" + count + "].CompanyName' data-val='true' data-val-required='Please enter company name' />" +
+            //    "<span class='field-validation-valid text-danger' data-valmsg-for='ExperienceDetails[" + count + "].CompanyName' data-valmsg-replace='true'></span>" +
+            //    "<label>Job Title</label><input type='text' name='ExperienceDetails[" + count + "].JobTitle' />" +
+            //    "<label>Start date</label><input type='text' name='ExperienceDetails[" + count + "].StartDate' id='ExperienceDetails[" + count + "].StartDate' class='customDate'/>" +
+            //    "<label>End date</label><input type='text' name='ExperienceDetails[" + count + "].EndDate' id='ExperienceDetails[" + count + "].EndDate' class='customDate' />" +
+            //    "<label>Select skills</label>" +
+            //    "<select data-placeholder='Choose options...' multiple class='btn chosen-select' name='ExperienceDetails[" + count + "].Skills'><option value= '1'> C</option><option value='2'>C++</option><option value='3'>C#</option><option value='4'>Java</option><option value='5'>.NET</option></select>" +
+            //    "<label>Job Type</label>" +
+            //    "<select name='ExperienceDetails[" + count + "].Type'></select>" +
+            //    "</div>");
+
+            //$('.customDate').datepicker();
+            //$(".chosen-select").chosen({ width: "95%" });
+            //$("form").removeData("validator").removeData("unobtrusiveValidation");
+            //$.validator.unobtrusive.parse("form");
+
+            //count++;
             @*$.ajax({
                 type: 'post',
                 url: '@Url.Action("GetWorkExperienceView", "Account")',
@@ -244,7 +269,9 @@
             //    "<label>Job Title</label><input type='text' name='ExperienceDetails.JobTitle' />" +
             //    "</div>");
         });
-        
+
+
+
     </script>
     
 </body >
