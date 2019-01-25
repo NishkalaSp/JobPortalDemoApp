@@ -22,7 +22,11 @@ namespace DataLayer.Entities
 
         public string ContactNumber { get; set; }
 
+        public DateTime DOB { get; set; }
+
         public DateTime CreatedDate { get; set; }
+
+        public string ResumeFileName { get; set; }
     }
 
     public class UserType

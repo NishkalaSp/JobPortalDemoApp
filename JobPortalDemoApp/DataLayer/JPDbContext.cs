@@ -28,5 +28,7 @@ namespace DataLayer
         public DbSet<ExperienceDetails> ExperienceDetails { get; set; }
 
         public DbSet<EducationDetails> EducationDetails { get; set; }
+
+        public DbSet<Skill> Skills { get; set; }
     }
 }

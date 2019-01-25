@@ -34,6 +34,15 @@ namespace DataLayer.Migrations
                 new UserType() { Type = "HR" },
                 new UserType() { Type = "JobSeeker" }
                 );
+
+            context.Skills.AddOrUpdate( s => s.Id,
+                new Skill() { Name = "C" },
+                new Skill() { Name = "C++" },
+                new Skill() { Name = "C#" },
+                new Skill() { Name = "ASP.NET" },
+                new Skill() { Name = "Java" },
+                new Skill() { Name = "Angular" }
+                );
         }
     }
 }

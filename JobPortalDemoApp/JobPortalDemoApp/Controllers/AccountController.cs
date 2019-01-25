@@ -3,6 +3,7 @@ using DataLayer.Entities;
 using JobPortalDemoApp.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -61,21 +62,82 @@ namespace JobPortalDemoApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterFormModel rfm, string[] companyName, string[] jobTitle)
+        public ActionResult Register(RegisterFormModel rfm)
         {
             if (ModelState.IsValid)
             {
-                //save to db
-                return View("");
-            }
+                if (!IsResumeFileExtensionValid(rfm.ResumeFile))
+                {
+                    ModelState.AddModelError("ResumeFile", "File with extension .txt, .doc, .docx or .pdf is allowed.");
+                    return View(rfm);
+                }
 
-            return View();
+                
+                //save to db
+                SaveUser(rfm);
+                return RedirectToAction("Index", "Home");
+            }
+            SaveUser(rfm);
+            return View(rfm);
         }
 
-        //public ActionResult GetWorkExperienceView()
-        //{
-        //    return PartialView("_WorkExpDetailView");
-        //}
+        private void SaveUser(RegisterFormModel rfm)
+        {
+            var fileName = DateTime.Now.ToString("yyyymmddMMss") + rfm.FirstName + rfm.LastName + System.IO.Path.GetExtension(rfm.ResumeFile.FileName);//datetime needed?
+            var user = new User() {
+                FirstName = rfm.FirstName,
+                LastName = rfm.LastName,
+                Password = rfm.Password, //must encrypt
+                Email = rfm.Email,
+                ContactNumber = rfm.ContactNumber,
+                Type = _context.UserTypes.Single( ut => ut.Type == "JobSeeker"),
+                ResumeFileName = fileName,
+                DOB = rfm.DOB,
+                CreatedDate = DateTime.Now
+            };
+
+            _context.User.Add(user);
+
+            SaveFile(rfm.ResumeFile, fileName);
+            foreach (var ed in rfm.ExperienceDetails)
+            {
+                ed.Seeker = user;
+                foreach (var skill in ed.SkillId)
+                {
+                    ed.Skills.Add(new Skill() { Id = Convert.ToInt32(skill) });
+                }
+            }
+
+            _context.ExperienceDetails.AddRange(rfm.ExperienceDetails);
+            _context.SaveChanges();
+
+            
+        }
+
+        private bool IsResumeFileExtensionValid(HttpPostedFileBase resumeFile)
+        {
+            var allowedExtensions = new string[]{ ".txt", ".doc", ".docx", ".pdf"};
+            var fileExtension = System.IO.Path.GetExtension(resumeFile.FileName);
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void SaveFile(HttpPostedFileBase resumeFile, string fileName) //void or bool?
+        {
+            var uploadUrl = Server.MapPath("~/Content/Resumes");
+            resumeFile.SaveAs(Path.Combine(uploadUrl, fileName));
+            return;
+        }
+
+        public ActionResult GetWorkExperienceView(int count)
+        {
+            ViewBag.Count = count;
+            ViewBag.SkillList = _context.Skills.ToList();
+            return PartialView("_WorkExpDetailView");
+        }
 
         public ActionResult LogOut()
         {
