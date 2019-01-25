@@ -11,7 +11,12 @@ namespace JobPortalDemoApp.Models
     public class RegisterFormModel
     {
         [Required]
-        public string Name { get; set; }
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
 
         [Required]
         [Display(Name = "E-mail")]
@@ -41,11 +46,11 @@ namespace JobPortalDemoApp.Models
 
         public EducationDetails EducationDetails { get; set; }
 
-        public ExperienceDetails[] ExperienceDetails { get; set; }
+        public List<ExperienceDetails> ExperienceDetails { get; set; }
 
         public RegisterFormModel()
         {
-            //WorkExperienceList = new List<ExperienceDetails>();
+            ExperienceDetails = new List<ExperienceDetails>();
         }
     }
 }

@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201901241048056_AddedExpDetailsListAsPropToSkillTable.Designer.cs">
       <DependentUpon>201901241048056_AddedExpDetailsListAsPropToSkillTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901250659133_AddedDOBPropToUserEntity.cs" />
+    <Compile Include="Migrations\201901250659133_AddedDOBPropToUserEntity.Designer.cs">
+      <DependentUpon>201901250659133_AddedDOBPropToUserEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -103,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901241048056_AddedExpDetailsListAsPropToSkillTable.resx">
       <DependentUpon>201901241048056_AddedExpDetailsListAsPropToSkillTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901250659133_AddedDOBPropToUserEntity.resx">
+      <DependentUpon>201901250659133_AddedDOBPropToUserEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -72,7 +72,7 @@ namespace JobPortalDemoApp.Controllers
                     return View(rfm);
                 }
 
-                SaveFile(rfm.ResumeFile, rfm.Name);
+                
                 //save to db
                 SaveUser(rfm);
                 return RedirectToAction("Index", "Home");
@@ -83,6 +83,31 @@ namespace JobPortalDemoApp.Controllers
 
         private void SaveUser(RegisterFormModel rfm)
         {
+            var fileName = DateTime.Now.ToString("yyyymmddMMss") + rfm.FirstName + rfm.LastName + System.IO.Path.GetExtension(rfm.ResumeFile.FileName);//datetime needed?
+            var user = new User() {
+                FirstName = rfm.FirstName,
+                LastName = rfm.LastName,
+                Password = rfm.Password, //must encrypt
+                Email = rfm.Email,
+                ContactNumber = rfm.ContactNumber,
+                Type = _context.UserTypes.Single( ut => ut.Type == "JobSeeker"),
+                ResumeFileName = fileName,
+                DOB = rfm.DOB,
+                CreatedDate = DateTime.Now
+            };
+
+            _context.User.Add(user);
+
+            SaveFile(rfm.ResumeFile, fileName);
+            foreach (var ed in rfm.ExperienceDetails)
+            {
+                ed.Seeker = user;
+                foreach (var skill in ed.SkillId)
+                {
+                    ed.Skills.Add(new Skill() { Id = Convert.ToInt32(skill) });
+                }
+            }
+
             _context.ExperienceDetails.AddRange(rfm.ExperienceDetails);
             _context.SaveChanges();
 
@@ -100,11 +125,9 @@ namespace JobPortalDemoApp.Controllers
             return true;
         }
 
-        private void SaveFile(HttpPostedFileBase resumeFile, string name) //void or bool?
+        private void SaveFile(HttpPostedFileBase resumeFile, string fileName) //void or bool?
         {
-            var fileExtension = System.IO.Path.GetExtension(resumeFile.FileName);
             var uploadUrl = Server.MapPath("~/Content/Resumes");
-            var fileName = DateTime.Now.ToString("yyyymmddMMss") + name + fileExtension;
             resumeFile.SaveAs(Path.Combine(uploadUrl, fileName));
             return;
         }
