@@ -399,6 +399,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\maxdate.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Content\Register.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -430,6 +431,7 @@
     <Content Include="Views\Account\RegisterPersonalDetailFormView.cshtml" />
     <Content Include="Views\Account\RegisterWorkExperienceDetailView.cshtml" />
     <Content Include="Views\Account\_WorkExpDetailView.cshtml" />
+    <Content Include="Views\Account\Register1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

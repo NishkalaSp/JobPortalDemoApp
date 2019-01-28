@@ -12,7 +12,7 @@ namespace DataLayer.Entities
 
         public User Seeker { get; set; }
 
-        public string CertificateOrDegreeName { get; set; }
+        public string HighestQualification { get; set; }
 
         public string InstituteOrUniversityName { get; set; }
 
@@ -20,7 +20,7 @@ namespace DataLayer.Entities
 
         public decimal Percentage { get; set; }
 
-        public EducationType Type { get; set; }
+        public string Type { get; set; }
 
         
 
