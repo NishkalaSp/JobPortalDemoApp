@@ -20,3 +20,9 @@ textarea {
     /*background: url("../images/chosen-sprite.png") -42px 1px no-repeat;*/
 }
 
+/*For details page*/
+.row {
+    margin-right: 0px;  
+    margin-left: 0px; 
+}
+

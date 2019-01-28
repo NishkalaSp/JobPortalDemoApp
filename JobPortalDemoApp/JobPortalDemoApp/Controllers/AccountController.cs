@@ -71,7 +71,7 @@ namespace JobPortalDemoApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!IsResumeFileExtensionValid(rfm.ResumeFile))
+                if (!IsResumeFileExtensionValid(rfm.PersonalDetail.ResumeFile))
                 {
                     ModelState.AddModelError("ResumeFile", "File with extension .txt, .doc, .docx or .pdf is allowed.");
                     return View(rfm);
@@ -80,7 +80,7 @@ namespace JobPortalDemoApp.Controllers
                 
                 //save to db
                 SaveUser(rfm);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Account");
             }
            
             return View(rfm);
@@ -88,41 +88,52 @@ namespace JobPortalDemoApp.Controllers
 
         private void SaveUser(RegisterFormModel rfm)
         {
-            var fileName = DateTime.Now.ToString("yyyymmddMMss") + rfm.FirstName + rfm.LastName + System.IO.Path.GetExtension(rfm.ResumeFile.FileName);//datetime needed?
+            var fileName = DateTime.Now.ToString("yyyymmddMMss") + 
+                                    rfm.PersonalDetail.FirstName + 
+                                    rfm.PersonalDetail.LastName + 
+                                    System.IO.Path.GetExtension(rfm.PersonalDetail.ResumeFile.FileName);//datetime needed?
+
             var user = new User() {
-                FirstName = rfm.FirstName,
-                LastName = rfm.LastName,
-                Password = rfm.Password, //must encrypt
-                Email = rfm.Email,
-                ContactNumber = rfm.ContactNumber,
+                FirstName = rfm.PersonalDetail.FirstName,
+                LastName = rfm.PersonalDetail.LastName,
+                Password = rfm.PersonalDetail.Password, //must encrypt
+                Email = rfm.PersonalDetail.Email,
+                ContactNumber = rfm.PersonalDetail.ContactNumber,
                 Type = _context.UserTypes.Single( ut => ut.Type == "JobSeeker"),
                 ResumeFileName = fileName,
-                DOB = rfm.DOB,
+                DOB = rfm.PersonalDetail.DOB,
                 CreatedDate = DateTime.Now
             };
 
             _context.User.Add(user);
 
-            SaveFile(rfm.ResumeFile, fileName);
+            SaveFile(rfm.PersonalDetail.ResumeFile, fileName);
+
             foreach (var ed in rfm.ExperienceDetails)
             {
-                ed.Seeker = user;
+                var experienceDetail = new ExperienceDetails() {
+                    Seeker = user,
+                    CompanyName = ed.CompanyName,
+                    JobTitle = ed.JobTitle,
+                    StartDate = ed.StartDate,
+                    EndDate = ed.EndDate,
+                    Type = ed.Type
+                };
                 foreach (var skill in ed.SkillId)
                 {
-                    ed.Skills.Add(new Skill() { Id = Convert.ToInt32(skill) });
+                    experienceDetail.Skills.Add(new Skill() { Id = Convert.ToInt32(skill) });
                 }
+                _context.ExperienceDetails.Add(experienceDetail);
             }
-
-            _context.ExperienceDetails.AddRange(rfm.ExperienceDetails);
 
             var eduDetail = new EducationDetails()
             {
                 Seeker = user,
-                HighestQualification = rfm.HighestQualification,
-                InstituteOrUniversityName = rfm.InstituteOrUniversityName,
-                MajorBranch = rfm.MajorBranch,
-                Percentage = rfm.Percentage,
-                Type = rfm.Type
+                HighestQualification = rfm.EducationDetail.HighestQualification,
+                InstituteOrUniversityName = rfm.EducationDetail.InstituteOrUniversityName,
+                MajorBranch = rfm.EducationDetail.MajorBranch,
+                Percentage = rfm.EducationDetail.Percentage,
+                Type = rfm.EducationDetail.Type
             };
             _context.EducationDetails.Add(eduDetail);
 

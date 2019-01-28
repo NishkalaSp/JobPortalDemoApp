@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201901250659133_AddedDOBPropToUserEntity.Designer.cs">
       <DependentUpon>201901250659133_AddedDOBPropToUserEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901280627178_update.cs" />
+    <Compile Include="Migrations\201901280627178_update.Designer.cs">
+      <DependentUpon>201901280627178_update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -110,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901250659133_AddedDOBPropToUserEntity.resx">
       <DependentUpon>201901250659133_AddedDOBPropToUserEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901280627178_update.resx">
+      <DependentUpon>201901280627178_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
