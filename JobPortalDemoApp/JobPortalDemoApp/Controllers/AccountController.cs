@@ -56,6 +56,11 @@ namespace JobPortalDemoApp.Controllers
             return View(login);
         }
 
+        public ActionResult Register1()
+        {
+            return View();
+        }
+
         public ActionResult Register()
         {
             return View();
@@ -77,7 +82,7 @@ namespace JobPortalDemoApp.Controllers
                 SaveUser(rfm);
                 return RedirectToAction("Index", "Home");
             }
-            SaveUser(rfm);
+           
             return View(rfm);
         }
 
@@ -109,9 +114,19 @@ namespace JobPortalDemoApp.Controllers
             }
 
             _context.ExperienceDetails.AddRange(rfm.ExperienceDetails);
-            _context.SaveChanges();
 
-            
+            var eduDetail = new EducationDetails()
+            {
+                Seeker = user,
+                HighestQualification = rfm.HighestQualification,
+                InstituteOrUniversityName = rfm.InstituteOrUniversityName,
+                MajorBranch = rfm.MajorBranch,
+                Percentage = rfm.Percentage,
+                Type = rfm.Type
+            };
+            _context.EducationDetails.Add(eduDetail);
+
+            _context.SaveChanges();
         }
 
         private bool IsResumeFileExtensionValid(HttpPostedFileBase resumeFile)

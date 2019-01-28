@@ -44,7 +44,23 @@ namespace JobPortalDemoApp.Models
         [Required]
         public HttpPostedFileBase ResumeFile { get; set; }
 
-        public EducationDetails EducationDetails { get; set; }
+        [Required]
+        [Display(Name = "Highest qualification")]
+        public string HighestQualification { get; set; }
+
+        [Required]
+        [Display(Name = "Institute / University name")]
+        public string InstituteOrUniversityName { get; set; }
+
+        [Display(Name = "Major Branch")]
+        public string MajorBranch { get; set; }
+
+        [Display(Name = "Aggregate / Percentage")]
+        public decimal Percentage { get; set; }
+
+        [Required]
+        [Display(Name = "Type")]
+        public string Type { get; set; }
 
         public List<ExperienceDetails> ExperienceDetails { get; set; }
 
