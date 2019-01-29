@@ -412,12 +412,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\EducationDetailModel.cs" />
+    <Compile Include="Models\JobPostModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PersonalDetailModel.cs" />
     <Compile Include="Models\RegisterFormModel.cs" />
     <Compile Include="Models\UserDetail.cs" />
     <Compile Include="Models\WorkExperienceDetailModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -435,6 +437,8 @@
     <Content Include="Views\Account\_WorkExpDetailView.cshtml" />
     <Content Include="Views\Account\Register1.cshtml" />
     <Content Include="Views\Job\Details.cshtml" />
+    <Content Include="Views\Job\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Job\AddJobPost.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

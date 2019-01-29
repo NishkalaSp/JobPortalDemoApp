@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Entities\EducationDetails.cs" />
     <Compile Include="Entities\ExperienceDetails.cs" />
+    <Compile Include="Entities\JobPost.cs" />
     <Compile Include="Entities\JobType.cs" />
     <Compile Include="Entities\Skill.cs" />
     <Compile Include="Entities\User.cs" />
@@ -86,6 +87,18 @@
     <Compile Include="Migrations\201901280627178_update.Designer.cs">
       <DependentUpon>201901280627178_update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901290908448_AddedJobPostEntity.cs" />
+    <Compile Include="Migrations\201901290908448_AddedJobPostEntity.Designer.cs">
+      <DependentUpon>201901290908448_AddedJobPostEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901291056244_ChangedUserTypeToRoleInUserEntity.cs" />
+    <Compile Include="Migrations\201901291056244_ChangedUserTypeToRoleInUserEntity.Designer.cs">
+      <DependentUpon>201901291056244_ChangedUserTypeToRoleInUserEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901291258383_AddedCreatedByIdAsFKUserEntity.cs" />
+    <Compile Include="Migrations\201901291258383_AddedCreatedByIdAsFKUserEntity.Designer.cs">
+      <DependentUpon>201901291258383_AddedCreatedByIdAsFKUserEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,6 +130,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901280627178_update.resx">
       <DependentUpon>201901280627178_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901290908448_AddedJobPostEntity.resx">
+      <DependentUpon>201901290908448_AddedJobPostEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901291056244_ChangedUserTypeToRoleInUserEntity.resx">
+      <DependentUpon>201901291056244_ChangedUserTypeToRoleInUserEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901291258383_AddedCreatedByIdAsFKUserEntity.resx">
+      <DependentUpon>201901291258383_AddedCreatedByIdAsFKUserEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

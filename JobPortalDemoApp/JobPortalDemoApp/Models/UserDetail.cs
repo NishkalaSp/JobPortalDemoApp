@@ -15,6 +15,8 @@ namespace JobPortalDemoApp.Models
 
         public UserDetail()
         {
+            PersonalDetail = new PersonalDetailModel();
+            EducationDetail = new EducationDetailModel();
             ExperienceDetails = new List<WorkExperienceDetailModel>();
         }
     }

@@ -21,7 +21,7 @@ namespace DataLayer
 
         public DbSet<EducationType> EducationTypes { get; set; }
 
-        public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Role> Role { get; set; }
 
         public DbSet<User> User { get; set; }
 
@@ -30,5 +30,7 @@ namespace DataLayer
         public DbSet<EducationDetails> EducationDetails { get; set; }
 
         public DbSet<Skill> Skills { get; set; }
+
+        public DbSet<JobPost> JobPost { get; set; }
     }
 }

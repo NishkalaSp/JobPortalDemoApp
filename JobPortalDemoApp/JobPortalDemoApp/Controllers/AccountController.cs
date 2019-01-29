@@ -1,6 +1,7 @@
 ﻿using DataLayer;
 using DataLayer.Entities;
 using JobPortalDemoApp.Models;
+using JobPortalDemoApp.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,10 @@ namespace JobPortalDemoApp.Controllers
     public class AccountController : Controller
     {
         private JPDbContext _context;
+
+        private UserService _userService;
+
+        public UserService UserService { get { return _userService ?? (_userService = new UserService());  } }
 
         public AccountController()
         {
@@ -30,7 +35,7 @@ namespace JobPortalDemoApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = GetUserByEmail(login.Email);
+                var user = UserService.GetUserByEmail(login.Email);
 
                 if (user == null)
                 {
@@ -45,8 +50,8 @@ namespace JobPortalDemoApp.Controllers
                 }
 
                 FormsAuthentication.SetAuthCookie(user.Email, false);
-                var hrUserType = _context.UserTypes.First(ut => ut.Type == "HR"); 
-                if (user.Type == hrUserType)
+                var hrUserType = _context.Role.First(r => r.Type == "HR"); 
+                if (user.Role == hrUserType)
                 {
                     return RedirectToAction("Search", "Job");
                 }
@@ -99,7 +104,7 @@ namespace JobPortalDemoApp.Controllers
                 Password = rfm.PersonalDetail.Password, //must encrypt
                 Email = rfm.PersonalDetail.Email,
                 ContactNumber = rfm.PersonalDetail.ContactNumber,
-                Type = _context.UserTypes.Single( ut => ut.Type == "JobSeeker"),
+                Role = _context.Role.Single( ut => ut.Type == "JobSeeker"),
                 ResumeFileName = fileName,
                 DOB = rfm.PersonalDetail.DOB,
                 CreatedDate = DateTime.Now
@@ -171,9 +176,6 @@ namespace JobPortalDemoApp.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        private User GetUserByEmail(string email)
-        {
-            return _context.User.Where(u => u.Email.Equals(email)).FirstOrDefault();
-        }
+        
     }
 }

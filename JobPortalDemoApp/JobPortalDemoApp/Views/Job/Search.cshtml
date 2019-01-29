@@ -47,7 +47,8 @@
                 createDataTable();
             }
             else {
-                searchGrid.fnDraw();
+                searchGrid.fnDestroy();
+                createDataTable();
             }
             
             searchResultContainer.show();
@@ -74,14 +75,14 @@
                     { "data": "Id", "autoWidth": "true" },
                     { "data": "FullName", "autoWidth": "true" },
                     { "data": "Email", "autoWidth": "true" },
-                    { "data": "ContactNumber", "autoWidth": "true" },
+                    { "data": "ContactNumber", "autoWidth": "10%" },
                     {
-                        "data": "DownloadUrl", "autoWidth": "5%", "mRender": function (row, type, data) {
+                        "data": "DownloadUrl", "width": "5%", "mRender": function (row, type, data) {
                             return "<a href = " + data.DownloadUrl + "><i class='glyphicon glyphicon-download'></i></a>";
                         }
                     },
                     {
-                        "data": "DetailsUrl", "autoWidth": "5%", "mRender": function (row, type, data) {
+                        "data": "DetailsUrl", "width": "5%", "mRender": function (row, type, data) {
                             return "<a href = " + data.DetailsUrl + " target='_blank'><i class='glyphicon glyphicon-eye-open'></i></a>";
                         }
                     }
