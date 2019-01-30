@@ -10,7 +10,7 @@ namespace DataLayer.Entities
     {
         public int Id { get; set; }
 
-        public UserType Type { get; set; }
+        public Role Role { get; set; }
 
         public string FirstName { get; set; }
 
@@ -29,7 +29,7 @@ namespace DataLayer.Entities
         public string ResumeFileName { get; set; }
     }
 
-    public class UserType
+    public class Role
     {
         public int Id { get; set; }
 

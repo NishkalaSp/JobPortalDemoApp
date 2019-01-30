@@ -1,0 +1,40 @@
+﻿@model JobPortalDemoApp.Models.JobPostModel
+
+@{
+    ViewBag.Title = "AddJobPost";
+}
+
+<h2>Add New Job Post</h2>
+
+@using (Html.BeginForm("AddJobPost", "Job", FormMethod.Post, new { id = "add-jobpost-form"}))
+{
+    <div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobBrief, htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.TextAreaFor(model => model.JobBrief, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.JobBrief, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Responsibilities, htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.TextAreaFor(model => model.Responsibilities, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Responsibilities, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Requirements, htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.TextAreaFor(model => model.Requirements, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Requirements, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        
+        <input type="reset" class="btn" value="Reset" />
+        <input type="submit" class="btn btn-primary" value="Save" />
+
+    </div>
+
+}

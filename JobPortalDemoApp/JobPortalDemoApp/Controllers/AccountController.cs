@@ -1,6 +1,7 @@
 ﻿using DataLayer;
 using DataLayer.Entities;
 using JobPortalDemoApp.Models;
+using JobPortalDemoApp.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,10 @@ namespace JobPortalDemoApp.Controllers
     public class AccountController : Controller
     {
         private JPDbContext _context;
+
+        private UserService _userService;
+
+        public UserService UserService { get { return _userService ?? (_userService = new UserService());  } }
 
         public AccountController()
         {
@@ -30,7 +35,7 @@ namespace JobPortalDemoApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = GetUserByEmail(login.Email);
+                var user = UserService.GetUserByEmail(login.Email);
 
                 if (user == null)
                 {
@@ -45,8 +50,8 @@ namespace JobPortalDemoApp.Controllers
                 }
 
                 FormsAuthentication.SetAuthCookie(user.Email, false);
-                var hrUserType = _context.UserTypes.First(ut => ut.Type == "HR"); 
-                if (user.Type == hrUserType)
+                var hrUserType = _context.Role.First(r => r.Type == "HR"); 
+                if (user.Role == hrUserType)
                 {
                     return RedirectToAction("Search", "Job");
                 }
@@ -71,7 +76,7 @@ namespace JobPortalDemoApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!IsResumeFileExtensionValid(rfm.ResumeFile))
+                if (!IsResumeFileExtensionValid(rfm.PersonalDetail.ResumeFile))
                 {
                     ModelState.AddModelError("ResumeFile", "File with extension .txt, .doc, .docx or .pdf is allowed.");
                     return View(rfm);
@@ -80,7 +85,7 @@ namespace JobPortalDemoApp.Controllers
                 
                 //save to db
                 SaveUser(rfm);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Account");
             }
            
             return View(rfm);
@@ -88,41 +93,52 @@ namespace JobPortalDemoApp.Controllers
 
         private void SaveUser(RegisterFormModel rfm)
         {
-            var fileName = DateTime.Now.ToString("yyyymmddMMss") + rfm.FirstName + rfm.LastName + System.IO.Path.GetExtension(rfm.ResumeFile.FileName);//datetime needed?
+            var fileName = DateTime.Now.ToString("yyyymmddMMss") + 
+                                    rfm.PersonalDetail.FirstName + 
+                                    rfm.PersonalDetail.LastName + 
+                                    System.IO.Path.GetExtension(rfm.PersonalDetail.ResumeFile.FileName);//datetime needed?
+
             var user = new User() {
-                FirstName = rfm.FirstName,
-                LastName = rfm.LastName,
-                Password = rfm.Password, //must encrypt
-                Email = rfm.Email,
-                ContactNumber = rfm.ContactNumber,
-                Type = _context.UserTypes.Single( ut => ut.Type == "JobSeeker"),
+                FirstName = rfm.PersonalDetail.FirstName,
+                LastName = rfm.PersonalDetail.LastName,
+                Password = rfm.PersonalDetail.Password, //must encrypt
+                Email = rfm.PersonalDetail.Email,
+                ContactNumber = rfm.PersonalDetail.ContactNumber,
+                Role = _context.Role.Single( ut => ut.Type == "JobSeeker"),
                 ResumeFileName = fileName,
-                DOB = rfm.DOB,
+                DOB = rfm.PersonalDetail.DOB,
                 CreatedDate = DateTime.Now
             };
 
             _context.User.Add(user);
 
-            SaveFile(rfm.ResumeFile, fileName);
+            SaveFile(rfm.PersonalDetail.ResumeFile, fileName);
+
             foreach (var ed in rfm.ExperienceDetails)
             {
-                ed.Seeker = user;
+                var experienceDetail = new ExperienceDetails() {
+                    Seeker = user,
+                    CompanyName = ed.CompanyName,
+                    JobTitle = ed.JobTitle,
+                    StartDate = ed.StartDate,
+                    EndDate = ed.EndDate,
+                    Type = ed.Type
+                };
                 foreach (var skill in ed.SkillId)
                 {
-                    ed.Skills.Add(new Skill() { Id = Convert.ToInt32(skill) });
+                    experienceDetail.Skills.Add(new Skill() { Id = Convert.ToInt32(skill) });
                 }
+                _context.ExperienceDetails.Add(experienceDetail);
             }
-
-            _context.ExperienceDetails.AddRange(rfm.ExperienceDetails);
 
             var eduDetail = new EducationDetails()
             {
                 Seeker = user,
-                HighestQualification = rfm.HighestQualification,
-                InstituteOrUniversityName = rfm.InstituteOrUniversityName,
-                MajorBranch = rfm.MajorBranch,
-                Percentage = rfm.Percentage,
-                Type = rfm.Type
+                HighestQualification = rfm.EducationDetail.HighestQualification,
+                InstituteOrUniversityName = rfm.EducationDetail.InstituteOrUniversityName,
+                MajorBranch = rfm.EducationDetail.MajorBranch,
+                Percentage = rfm.EducationDetail.Percentage,
+                Type = rfm.EducationDetail.Type
             };
             _context.EducationDetails.Add(eduDetail);
 
@@ -160,9 +176,6 @@ namespace JobPortalDemoApp.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        private User GetUserByEmail(string email)
-        {
-            return _context.User.Where(u => u.Email.Equals(email)).FirstOrDefault();
-        }
+        
     }
 }

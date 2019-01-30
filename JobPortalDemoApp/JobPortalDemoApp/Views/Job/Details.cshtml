@@ -1,0 +1,85 @@
+﻿@model JobPortalDemoApp.Models.UserDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.PersonalDetail.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.DisplayFor(model => model.PersonalDetail.FirstName, new { htmlAttributes = new { @class = "form-control " } })
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.PersonalDetail.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.DisplayFor(model => model.PersonalDetail.LastName, new { htmlAttributes = new { @class = "form-control " } })
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.PersonalDetail.Email, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.DisplayFor(model => model.PersonalDetail.Email, new { htmlAttributes = new { @class = "form-control " } })
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.PersonalDetail.ContactNumber, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.DisplayFor(model => model.PersonalDetail.ContactNumber, new { htmlAttributes = new { @class = "form-control " } })
+    </div>
+</div>
+
+<hr />
+
+<div>
+    <h4>Education details</h4>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.EducationDetail.HighestQualification, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.DisplayFor(model => model.EducationDetail.HighestQualification, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.EducationDetail.InstituteOrUniversityName, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.DisplayFor(model => model.EducationDetail.InstituteOrUniversityName, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.EducationDetail.MajorBranch, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.DisplayFor(model => model.EducationDetail.MajorBranch, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.EducationDetail.Percentage, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.DisplayFor(model => model.EducationDetail.Percentage, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.EducationDetail.Type, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.DisplayFor(model => model.EducationDetail.Type, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+   
+</div>
+
+<hr />
+
+<div>
+    @foreach (var exp in Model.ExperienceDetails)
+    {
+        <div class="form-group row">
+            @Html.LabelFor(model => exp.CompanyName, htmlAttributes: new { @class = "control-label col-md-4" })
+            @Html.DisplayFor(model => exp.CompanyName, new { htmlAttributes = new { @class = "form-control " } })
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => exp.JobTitle, htmlAttributes: new { @class = "control-label col-md-4" })
+            @Html.DisplayFor(model => exp.JobTitle, new { htmlAttributes = new { @class = "form-control " } })
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => exp.StartDate, htmlAttributes: new { @class = "control-label col-md-4" })
+            @Html.DisplayFor(model => exp.StartDate, new { htmlAttributes = new { @class = "form-control " } })
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => exp.EndDate, htmlAttributes: new { @class = "control-label col-md-4" })
+            @Html.DisplayFor(model => exp.EndDate, new { htmlAttributes = new { @class = "form-control " } })
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => exp.Skills, htmlAttributes: new { @class = "control-label col-md-4" })
+            @Html.DisplayFor(model => exp.Skills, new { htmlAttributes = new { @class = "form-control " } })
+        </div>
+
+        <hr />
+    }
+</div>
+
+

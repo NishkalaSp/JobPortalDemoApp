@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using JobPortalDemoApp.Service
+
+@{ 
+    bool isHRUser = false;
+    if (User.Identity.IsAuthenticated)
+    {
+        var userService = new UserService();
+        isHRUser = userService.IsHRUser(User.Identity.Name);
+    }
+
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,7 +34,19 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-
+                    @if (isHRUser)
+                    {                   
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Job Post
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Add", "AddJobPost", "Job")</li>
+                                <li>@Html.ActionLink("#", "", "Job")</li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (HttpContext.Current.Request.IsAuthenticated)
@@ -33,7 +57,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("My History", "Index", "History")</li>
+                                @*<li>@Html.ActionLink("My History", "Index", "History")</li>*@
                                 <li>@Html.ActionLink("Log Out", "LogOut", "Account")</li>
                             </ul>
                         </li>

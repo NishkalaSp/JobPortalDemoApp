@@ -30,9 +30,9 @@ namespace DataLayer.Migrations
                 new EducationType() { Type = "Correspondence" } 
                 );
 
-            context.UserTypes.AddOrUpdate( u => u.Id,
-                new UserType() { Type = "HR" },
-                new UserType() { Type = "JobSeeker" }
+            context.Role.AddOrUpdate( u => u.Id,
+                new Role() { Type = "HR" },
+                new Role() { Type = "JobSeeker" }
                 );
 
             context.Skills.AddOrUpdate( s => s.Id,

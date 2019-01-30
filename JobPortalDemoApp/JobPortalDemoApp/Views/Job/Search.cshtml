@@ -7,11 +7,10 @@
 
 <div>
     <div class="input-group">
-        <input type="text" placeholder="Search for name.." id="search-box" class="form-control" />
-        <div class="input-group-append">
-            <button id="search-btn" class="input-group-btn">Search</button>
-      
-        </div>
+        <input type="text" placeholder="Search by name.." id="search-box" class="form-control" />
+        <span class="input-group-addon" style="width: 0;">
+            <i class="glyphicon glyphicon-search"></i>
+        </span>
     </div>
 
     <div id="searchResultContainer" style="display:none;">
@@ -23,6 +22,8 @@
                     <th>FullName</th>
                     <th>Email</th>
                     <th>Contact Number</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -39,17 +40,19 @@
         var searchTable = $("#searchTable");
         var searchGrid;
 
-        $("#search-btn").on("click", function () {
+        $("#search-box").on("keyup", function () {
             var searchText = searchBox.val();
 
             if (!searchTable.hasClass("dataTable")) {
                 createDataTable();
             }
             else {
-                searchGrid.fnDraw();
+                searchGrid.fnDestroy();
+                createDataTable();
             }
             
             searchResultContainer.show();
+            return false;
         });
 
         var createDataTable = function () {
@@ -64,17 +67,25 @@
                 },
                 "serverSide": true,
                 "searching": false,
-                //"fnServerData": function (sSource, aoData, fnCallback) {
+                //"serverParams": function (aoData) {
                 //    aoData.push({ "name": "searchString", "value": searchBox.val() });
-                //    $.getJSON(sSource, aoData, function (json) {
-                //        fnCallback(json)
-                //    });
+                //  
                 //},
                 "columns": [
                     { "data": "Id", "autoWidth": "true" },
                     { "data": "FullName", "autoWidth": "true" },
                     { "data": "Email", "autoWidth": "true" },
-                    { "data": "ContactNumber", "autoWidth": "true" }
+                    { "data": "ContactNumber", "autoWidth": "10%" },
+                    {
+                        "data": "DownloadUrl", "width": "5%", "mRender": function (row, type, data) {
+                            return "<a href = " + data.DownloadUrl + "><i class='glyphicon glyphicon-download'></i></a>";
+                        }
+                    },
+                    {
+                        "data": "DetailsUrl", "width": "5%", "mRender": function (row, type, data) {
+                            return "<a href = " + data.DetailsUrl + " target='_blank'><i class='glyphicon glyphicon-eye-open'></i></a>";
+                        }
+                    }
                 ]
             });
         };
