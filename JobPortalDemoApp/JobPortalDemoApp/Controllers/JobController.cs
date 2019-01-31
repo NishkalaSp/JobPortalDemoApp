@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace JobPortalDemoApp.Controllers
 {
@@ -24,7 +25,7 @@ namespace JobPortalDemoApp.Controllers
             _context = new JPDbContext();
         }
 
-        public ActionResult Search()
+        public ActionResult CandidatesListing()
         {
             return View();
         }
@@ -44,6 +45,7 @@ namespace JobPortalDemoApp.Controllers
                     CreatedById = UserService.GetUserByEmail(HttpContext.User.Identity.Name).Id,
                     PostedOn = DateTime.Now,
                     IsActive = true,
+                    Title = jp.Title,
                     JobBrief = jp.JobBrief,
                     Responsibilities = jp.Responsibilities,
                     Requirements = jp.Requirements
@@ -51,9 +53,43 @@ namespace JobPortalDemoApp.Controllers
 
                 _context.JobPost.Add(jobPost);
                 _context.SaveChanges();
-                return RedirectToAction("Search", "Job");
+                return RedirectToAction("JobsListing", "Job");
             }
             return View(jp);
+        }
+
+        public ActionResult JobsListing()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetJobsPostedGridData(string search)
+        {
+            var allJobs = _context.JobPost.Include(j => j.CreatedBy).Select(jp => new
+            {
+                Id = jp.Id,
+                Title = jp.Title,
+                PostedBy = jp.CreatedBy.Email,
+                PostedOn = jp.PostedOn,
+                IsActive = jp.IsActive
+            }).OrderByDescending(j => j.PostedOn).ToList();
+
+            var data = allJobs.Select( jp=> new {
+                Id = jp.Id,
+                Title = jp.Title,
+                PostedBy = jp.PostedBy,
+                PostedOn = jp.PostedOn.ToString("MMM d yyyy"),
+                IsActive = jp.IsActive,
+                DetailsUrl = Url.Action("JobDetails", "Job", new { jobId = jp.Id })
+            });
+
+            return Json(new { data = data, recordsTotal = allJobs.Count() }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult JobDetails(int jobId)
+        {
+            return View();
         }
 
         public ActionResult GetGridData(string searchString)

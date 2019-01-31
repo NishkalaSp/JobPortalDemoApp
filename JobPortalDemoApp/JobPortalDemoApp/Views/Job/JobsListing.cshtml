@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "JobsListing";
+}
+
+<h2>Jobs Posted</h2>
+
+<div id="jobs-listing-container">
+    <table id="jobs-listing-table" class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Posted By</th>
+                <th>Posted On</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script>
+        $(function () {
+            var jobsListingTable = $("#jobs-listing-table");
+            var grid;
+            grid = jobsListingTable.dataTable({
+                "sDom": 'tp',
+                "ajax": {
+                    "url": "/Job/GetJobsPostedGridData",
+                    "type": "POST"
+                    //"datatype": "json",
+                },
+                "serverSide": true,
+                "searching": false,
+                "responsive": true,
+                "pagingType": "simple",
+                "columns": [
+                    { "data": "Id", "autoWidth": "true" },
+                    { "data": "Title", "autoWidth": "true" },
+                    { "data": "PostedBy", "autoWidth": "true" },
+                    { "data": "PostedOn", "autoWidth": "10%" },
+                    {
+                        "data": "IsActive", "autoWidth": "10%", "mRender": function (row, type, data) {
+                            if (data) {
+                                return "<span style='color: blue;'>Open</span>";
+                            }
+                            else {
+                                return "<span style='color: red;'>Closed</span>";
+                            }
+                        }
+                    },
+                    {
+                        "data": "DetailsUrl", "width": "5%", "mRender": function (row, type, data) {
+                            return "<a href = " + data.DetailsUrl + " target='_blank'><i class='glyphicon glyphicon-eye-open'></i></a>";
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
