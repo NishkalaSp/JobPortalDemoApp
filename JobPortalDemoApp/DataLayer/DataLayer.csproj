@@ -99,6 +99,10 @@
     <Compile Include="Migrations\201901291258383_AddedCreatedByIdAsFKUserEntity.Designer.cs">
       <DependentUpon>201901291258383_AddedCreatedByIdAsFKUserEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901301740128_AddedTitlePropToJobPostTable.cs" />
+    <Compile Include="Migrations\201901301740128_AddedTitlePropToJobPostTable.Designer.cs">
+      <DependentUpon>201901301740128_AddedTitlePropToJobPostTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -139,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901291258383_AddedCreatedByIdAsFKUserEntity.resx">
       <DependentUpon>201901291258383_AddedCreatedByIdAsFKUserEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901301740128_AddedTitlePropToJobPostTable.resx">
+      <DependentUpon>201901301740128_AddedTitlePropToJobPostTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

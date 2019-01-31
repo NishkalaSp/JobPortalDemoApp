@@ -431,7 +431,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Job\Search.cshtml" />
+    <Content Include="Views\Job\CandidatesListing.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\RegisterPersonalDetailFormView.cshtml" />
     <Content Include="Views\Account\_WorkExpDetailView.cshtml" />
@@ -439,6 +439,7 @@
     <Content Include="Views\Job\Details.cshtml" />
     <Content Include="Views\Job\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Job\AddJobPost.cshtml" />
+    <Content Include="Views\Job\JobsListing.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

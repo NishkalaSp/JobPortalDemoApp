@@ -16,6 +16,8 @@ namespace DataLayer.Entities
 
         public DateTime PostedOn { get; set; }
 
+        public string Title { get; set; }
+
         public string JobBrief { get; set; }
 
         public string Responsibilities { get; set; }

@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Job Portal Demo App</title>
     
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
@@ -35,18 +35,27 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (isHRUser)
-                    {                   
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                Job Post
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Add", "AddJobPost", "Job")</li>
-                                <li>@Html.ActionLink("#", "", "Job")</li>
-                            </ul>
-                        </li>
-                    }
+    {
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Jobs
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Add Job", "AddJobPost", "Job")</li>
+                        <li>@Html.ActionLink("Jobs Listing", "JobsListing", "Job")</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Candidates
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Candidates Listing", "CandidatesListing", "Job")</li>
+                    </ul>
+                </li>
+}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (HttpContext.Current.Request.IsAuthenticated)

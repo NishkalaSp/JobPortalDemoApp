@@ -38,7 +38,7 @@
         var searchBox = $("#search-box");
         var searchResultContainer = $("#searchResultContainer");
         var searchTable = $("#searchTable");
-        var searchGrid;
+        var searchGrid = null;
 
         $("#search-box").on("keyup", function () {
             var searchText = searchBox.val();
@@ -67,10 +67,7 @@
                 },
                 "serverSide": true,
                 "searching": false,
-                //"serverParams": function (aoData) {
-                //    aoData.push({ "name": "searchString", "value": searchBox.val() });
-                //  
-                //},
+                "responsive": true,
                 "columns": [
                     { "data": "Id", "autoWidth": "true" },
                     { "data": "FullName", "autoWidth": "true" },
