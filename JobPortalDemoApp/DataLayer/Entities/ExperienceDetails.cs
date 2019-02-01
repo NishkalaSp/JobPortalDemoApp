@@ -28,7 +28,7 @@ namespace DataLayer.Entities
 
         public string Country { get; set; }
 
-        public string[] SkillId { get; set; }
+        //public string[] SkillId { get; set; }
 
         public ICollection<Skill> Skills { get; set; }
 

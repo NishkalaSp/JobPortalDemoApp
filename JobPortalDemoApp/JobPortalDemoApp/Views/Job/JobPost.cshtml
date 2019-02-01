@@ -1,14 +1,22 @@
 ﻿@model JobPortalDemoApp.Models.JobPostModel
 
-@{
-    ViewBag.Title = "AddJobPost";
-}
+@using DataLayer.Entities
 
+@{
+    if (Model.ActionName.Equals("EditJobPost"))
+    {
+        Layout = null;
+    }
+    ViewBag.Title = "New Job Post";
+}
+<link href="~/Content/themes/base/chosen.min.css" rel="stylesheet" />
 <h2>Add New Job Post</h2>
 
-@using (Html.BeginForm("AddJobPost", "Job", FormMethod.Post, new { id = "add-jobpost-form"}))
+@using (Html.BeginForm(Model.ActionName, "Job", FormMethod.Post, new { id = "add-jobpost-form"}))
 {
     <div>
+        <input type="hidden" id="JobPostId" name="JobPostId" value="@Model.JobPostId" />
+        <input type="hidden" id="ActionName" name="ActionName" value="@Model.ActionName" />
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
             <div>
@@ -16,6 +24,18 @@
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            @Html.Label("Skills", htmlAttributes: new { @class = "control-label" })
+            <div>
+                <select data-placeholder='Choose options...' multiple class='form-control chosen-select' name="SkillIds">
+                    @foreach (var item in (List<Skill>)ViewBag.SkillList)
+                    {
+                        <option value='@item.Id'>@item.Name</option>
+                    }
+                </select>
+            </div>   
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.JobBrief, htmlAttributes: new { @class = "control-label" })
             <div>
@@ -45,3 +65,13 @@
     </div>
 
     }
+
+@section scripts{
+
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script>
+        $(function () {
+            $(".chosen-select").chosen({ width: "50%" });
+        });
+    </script>
+}

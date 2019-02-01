@@ -1,0 +1,67 @@
+﻿@model JobPortalDemoApp.Models.JobPostModel
+@{
+    ViewBag.Title = "Job Details";
+}
+
+
+<h3>#@Model.JobPostId Job Details</h3>
+
+<div class="container">
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+        @*@Html.DisplayFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })*@
+        <p>@Model.Title</p>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Requirements, htmlAttributes: new { @class = "control-label" })
+        @*@Html.DisplayFor(model => model.Requirements, new { htmlAttributes = new { @class = "form-control", style= "white-space: pre-wrap;" } })*@
+        <p style= "white-space: pre-wrap;">@Model.Requirements</p>
+    </div>
+</div>
+
+<h3>Applied candidates</h3>
+<div id="job-candidates-container" class="container">
+    <table id="job-candidates-table" class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Applied On</th>
+                <th>Skills</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script>
+        $(function () {
+            var jobsListingTable = $("#job-candidates-table");
+            var grid;
+            grid = jobsListingTable.dataTable({
+                "sDom": 'tp',
+                "ajax": {
+                    "url": "/Job/GetCandidatesGridData",
+                    "type": "GET",
+                    "datatype": "json",
+                    "data": { "jobId": @Model.JobPostId }
+                },
+                "serverSide": true,
+                "searching": false,
+                "responsive": true,
+                "pagingType": "simple",
+                "columns": [
+                    { "data": "Id", "autoWidth": "true" },
+                    { "data": "Email", "autoWidth": "true" },
+                    { "data": "ContactNumber", "autoWidth": "true" },
+                    { "data": "AppliedOn", "autoWidth": "true" },
+                    { "data": "Skills", "autoWidth": "10%" }
+                ]
+            });
+        });
+    </script>
+}
+

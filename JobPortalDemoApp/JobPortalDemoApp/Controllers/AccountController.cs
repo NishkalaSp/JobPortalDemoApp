@@ -68,7 +68,7 @@ namespace JobPortalDemoApp.Controllers
 
         public ActionResult Register()
         {
-            return View();
+            return View("Register1");
         }
 
         [HttpPost]
@@ -88,7 +88,7 @@ namespace JobPortalDemoApp.Controllers
                 return RedirectToAction("Login", "Account");
             }
            
-            return View(rfm);
+            return View("Register1", rfm);
         }
 
         private void SaveUser(RegisterFormModel rfm)

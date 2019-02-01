@@ -51,9 +51,13 @@
     <Compile Include="Entities\EducationDetails.cs" />
     <Compile Include="Entities\ExperienceDetails.cs" />
     <Compile Include="Entities\JobPost.cs" />
+    <Compile Include="Entities\JobPostActivity.cs" />
+    <Compile Include="Entities\JobSkill.cs" />
     <Compile Include="Entities\JobType.cs" />
+    <Compile Include="Entities\Notification.cs" />
     <Compile Include="Entities\Skill.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserNotification.cs" />
     <Compile Include="JPDbContext.cs" />
     <Compile Include="Migrations\201901170829050_initial.cs" />
     <Compile Include="Migrations\201901170829050_initial.Designer.cs">
@@ -103,6 +107,22 @@
     <Compile Include="Migrations\201901301740128_AddedTitlePropToJobPostTable.Designer.cs">
       <DependentUpon>201901301740128_AddedTitlePropToJobPostTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901310940254_AddedJobPostActivityEntity.cs" />
+    <Compile Include="Migrations\201901310940254_AddedJobPostActivityEntity.Designer.cs">
+      <DependentUpon>201901310940254_AddedJobPostActivityEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901311258326_AddedJobSkillEntity.cs" />
+    <Compile Include="Migrations\201901311258326_AddedJobSkillEntity.Designer.cs">
+      <DependentUpon>201901311258326_AddedJobSkillEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902010417509_AddedModifiedPropToJobPostEntity.cs" />
+    <Compile Include="Migrations\201902010417509_AddedModifiedPropToJobPostEntity.Designer.cs">
+      <DependentUpon>201902010417509_AddedModifiedPropToJobPostEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902010828032_AddedNotificationAndUNEntity.cs" />
+    <Compile Include="Migrations\201902010828032_AddedNotificationAndUNEntity.Designer.cs">
+      <DependentUpon>201902010828032_AddedNotificationAndUNEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,6 +166,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901301740128_AddedTitlePropToJobPostTable.resx">
       <DependentUpon>201901301740128_AddedTitlePropToJobPostTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901310940254_AddedJobPostActivityEntity.resx">
+      <DependentUpon>201901310940254_AddedJobPostActivityEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901311258326_AddedJobSkillEntity.resx">
+      <DependentUpon>201901311258326_AddedJobSkillEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902010417509_AddedModifiedPropToJobPostEntity.resx">
+      <DependentUpon>201902010417509_AddedModifiedPropToJobPostEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902010828032_AddedNotificationAndUNEntity.resx">
+      <DependentUpon>201902010828032_AddedNotificationAndUNEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
