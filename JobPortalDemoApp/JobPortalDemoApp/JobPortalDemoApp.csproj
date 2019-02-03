@@ -408,6 +408,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\NController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -438,8 +439,9 @@
     <Content Include="Views\Account\Register1.cshtml" />
     <Content Include="Views\Job\Details.cshtml" />
     <Content Include="Views\Job\DisplayTemplates\DateTime.cshtml" />
-    <Content Include="Views\Job\AddJobPost.cshtml" />
+    <Content Include="Views\Job\JobPost.cshtml" />
     <Content Include="Views\Job\JobsListing.cshtml" />
+    <Content Include="Views\Job\JobDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -449,6 +451,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\N\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">

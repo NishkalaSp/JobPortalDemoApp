@@ -15,10 +15,30 @@
                 <th>Posted On</th>
                 <th>Status</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Close</span></button>
+
+            </div>
+            <div class="modal-body">
+                <div id="edit-job-post-container"></div>
+
+
+                <p>Hi!</p>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 @section scripts{
@@ -27,6 +47,7 @@
         $(function () {
             var jobsListingTable = $("#jobs-listing-table");
             var grid;
+
             grid = jobsListingTable.dataTable({
                 "sDom": 'tp',
                 "ajax": {
@@ -57,9 +78,42 @@
                         "data": "DetailsUrl", "width": "5%", "mRender": function (row, type, data) {
                             return "<a href = " + data.DetailsUrl + " target='_blank'><i class='glyphicon glyphicon-eye-open'></i></a>";
                         }
+                    },
+                    {
+                        "data": "", "width": "5%", "mRender": function (row, type, data) {
+                            return "<a href = '#edit-modal' class='edit-job-post' data-job-post-id=" + data.Id + "><i class='glyphicon glyphicon-edit'></i></a>";
+                        }
                     }
-                ]
+                ],
+                "drawCallback": function (settings) {
+                    alert('DataTables has redrawn the table');
+                    $('.edit-job-post').on('click', showEditModal);
+                }
             });
+
+            var showEditModal = function (e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                var jobPostId = $(this).data('job-post-id');
+                var jobPostDiv = $("#edit-job-post-container");
+
+                $.ajax({
+                url: '@Url.Action("EditJobPost", "Job")',
+                type: 'GET',
+                data: { 'jobPostId': jobPostId },
+                dataType: 'html',
+                success: function (data) {
+                    jobPostDiv.append(data);
+                    $(href).modal('toggle');
+                },
+                error: function () {
+                    alert("Something went wrong!");
+                }
+            });
+
+                
+            };
+
         });
     </script>
 }

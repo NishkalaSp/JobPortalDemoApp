@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Search";
 }
-
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 <h2>Search</h2>
 
 <div>
@@ -18,7 +18,7 @@
         <table id="searchTable" class="table">
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>#</th>
                     <th>FullName</th>
                     <th>Email</th>
                     <th>Contact Number</th>
@@ -68,20 +68,21 @@
                 "serverSide": true,
                 "searching": false,
                 "responsive": true,
+                "order": [[2, "asc"]],
                 "columns": [
                     { "data": "Id", "autoWidth": "true" },
                     { "data": "FullName", "autoWidth": "true" },
                     { "data": "Email", "autoWidth": "true" },
-                    { "data": "ContactNumber", "autoWidth": "10%" },
+                    { "data": "ContactNumber", "autoWidth": "true" },
                     {
                         "data": "DownloadUrl", "width": "5%", "mRender": function (row, type, data) {
                             return "<a href = " + data.DownloadUrl + "><i class='glyphicon glyphicon-download'></i></a>";
-                        }
+                        }, "bSortable": false
                     },
                     {
                         "data": "DetailsUrl", "width": "5%", "mRender": function (row, type, data) {
                             return "<a href = " + data.DetailsUrl + " target='_blank'><i class='glyphicon glyphicon-eye-open'></i></a>";
-                        }
+                        }, "bSortable": false
                     }
                 ]
             });

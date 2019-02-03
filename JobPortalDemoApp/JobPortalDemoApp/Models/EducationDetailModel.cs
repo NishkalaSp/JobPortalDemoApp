@@ -20,6 +20,7 @@ namespace JobPortalDemoApp.Models
         public string MajorBranch { get; set; }
 
         [Display(Name = "Aggregate / Percentage")]
+        [DisplayFormat(DataFormatString = "{0:0.00}%")]
         public decimal Percentage { get; set; }
 
        

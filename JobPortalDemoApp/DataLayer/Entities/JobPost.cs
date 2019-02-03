@@ -16,6 +16,12 @@ namespace DataLayer.Entities
 
         public DateTime PostedOn { get; set; }
 
+        public int? ModifiedById { get; set; }
+
+        public User ModifiedBy { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
         public string Title { get; set; }
 
         public string JobBrief { get; set; }

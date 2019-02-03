@@ -32,7 +32,10 @@ namespace JobPortalDemoApp.Controllers
 
         public ActionResult AddJobPost()
         {
-            return View();
+            var jobPostModel = new JobPostModel();
+            jobPostModel.ActionName = "AddJobPost";
+            ViewBag.SkillList = _context.Skills.ToList();
+            return View("JobPost", jobPostModel);
         }
 
         [HttpPost]
@@ -48,14 +51,96 @@ namespace JobPortalDemoApp.Controllers
                     Title = jp.Title,
                     JobBrief = jp.JobBrief,
                     Responsibilities = jp.Responsibilities,
-                    Requirements = jp.Requirements
+                    Requirements = jp.Requirements,
                 };
 
                 _context.JobPost.Add(jobPost);
+
+                foreach (var skillId in jp.SkillIds)
+                {
+                    var jobSkill = new JobSkill
+                    {
+                        JobPostId = jobPost.Id,
+                        SkillId = Convert.ToInt32(skillId)
+                    };
+                    _context.JobSkill.Add(jobSkill);
+                }
+
+                //create notification
+                var notification = new Notification
+                {
+                    Type = NotificationType.Add,
+                    JobPostId = jobPost.Id
+                };
+                _context.Notification.Add(notification);
+
+                //notify all users
+                var seekerRoleId = _context.Role.Where(r => r.Type == "JobSeeker").FirstOrDefault().Id;
+                var jobSeekersId = _context.User.Include(u => u.Role).Where(u => u.Role.Id == seekerRoleId).Select(u => u.Id).ToList();
+
+                foreach (var seekerId in jobSeekersId)
+                {
+                    var un = new UserNotification
+                    {
+                        NotificationId = notification.Id,
+                        UserId = seekerId,
+                        IsRead = false
+                    };
+                    _context.UserNotification.Add(un);
+                }
+
                 _context.SaveChanges();
                 return RedirectToAction("JobsListing", "Job");
             }
-            return View(jp);
+            return View("JobPost", jp);
+        }
+
+        public ActionResult EditJobPost(int jobPostId)
+        {
+            var jobPost = _context.JobPost.Where(jp => jp.Id == jobPostId).FirstOrDefault();
+
+            var jobPostModel = new JobPostModel() {
+                JobPostId = jobPost.Id,
+                Title = jobPost.Title,
+                SkillIds = _context.JobSkill.Where(js => js.JobPostId == jobPost.Id).Select(js => js.SkillId).ToArray(),
+                JobBrief = jobPost.JobBrief,
+                Requirements = jobPost.Requirements,
+                Responsibilities = jobPost.Responsibilities,
+                ActionName = "EditJobPost"
+            };
+
+            ViewBag.SkillList = _context.Skills.ToList();
+            return View("JobPost", jobPostModel);
+        }
+
+        [HttpPost]
+        public ActionResult EditJobPost(JobPostModel jpm)
+        {
+            if (ModelState.IsValid)
+            {
+                var jobPost = _context.JobPost.Where(jp => jp.Id == jpm.JobPostId).FirstOrDefault();
+
+                jobPost.ModifiedById = UserService.GetUserByEmail(HttpContext.User.Identity.Name).Id;
+                jobPost.ModifiedOn = DateTime.Now;
+                jobPost.Title = jpm.Title;
+                jobPost.JobBrief = jpm.JobBrief;
+                jobPost.Responsibilities = jpm.Responsibilities;
+                jobPost.Requirements = jpm.Requirements;
+
+                //foreach (var skillId in jpm.SkillIds)
+                //{
+                //    var jobSkill = new JobSkill
+                //    {
+                //        JobPostId = jobPost.Id,
+                //        SkillId = Convert.ToInt32(skillId)
+                //    };
+                //    _context.JobSkill.Add(jobSkill);
+                //}
+
+                _context.SaveChanges();
+                return RedirectToAction("JobsListing", "Job");
+            }
+            return View("JobPost", jpm);
         }
 
         public ActionResult JobsListing()
@@ -89,11 +174,44 @@ namespace JobPortalDemoApp.Controllers
 
         public ActionResult JobDetails(int jobId)
         {
-            return View();
+            var jobPost = _context.JobPost.Where(jp => jp.Id == jobId).FirstOrDefault();
+            if (jobPost == null)
+            {
+                //return 
+            }
+
+            var skills = _context.JobSkill.Include(js => js.Skill).Where(js => js.JobPostId == jobPost.Id).Select(js => js.Skill.Name).ToList();
+            var jobPostModel = new JobPostModel {
+                JobPostId = jobPost.Id,
+                Title = jobPost.Title,
+                Skills = string.Join(", ", skills),
+                JobBrief = jobPost.JobBrief,
+                Responsibilities = jobPost.Responsibilities,
+                Requirements = jobPost.Requirements
+            };
+
+            return View(jobPostModel);
+        }
+
+        public ActionResult GetCandidatesGridData(int jobId)
+        {
+            var candidates = _context.JobPostActivity.Include(jpa => jpa.Seeker).Where(jpa => jpa.JobPostId == jobId)
+                                        .Select(jpa => new { AppliedOn = jpa.AppliedOn, Seeker = jpa.Seeker })
+                                        .ToList();
+            var data = candidates.Select(c => new {
+                Id = c.Seeker.Id,
+                Email = c.Seeker.Email,
+                ContactNumber = c.Seeker.ContactNumber,
+                AppliedOn = c.AppliedOn,
+                Skills = ""
+            });
+
+            return Json(new { data = data, recordsTotal = data.Count() }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetGridData(string searchString)
         {
+
             var data = GetJobSeekers(searchString).Select(js => new {
                 Id = js.Id,
                 FullName = js.FirstName + " " + js.LastName,
@@ -168,8 +286,8 @@ namespace JobPortalDemoApp.Controllers
 
         private List<User> GetJobSeekers(string searchString)
         {
-            var seekerUserType = _context.Role.First(ut => ut.Type.Equals("JobSeeker"));
-            return _context.User.Where(u => u.Role.Id == seekerUserType.Id 
+            var roleId = _context.Role.First(ut => ut.Type.Equals("JobSeeker")).Id;
+            return _context.User.Where(u => u.Role.Id == roleId
                                             && (u.FirstName.Contains(searchString)
                                             || u.LastName.Contains(searchString))).ToList();
         }

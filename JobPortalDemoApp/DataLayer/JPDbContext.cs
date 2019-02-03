@@ -32,5 +32,22 @@ namespace DataLayer
         public DbSet<Skill> Skills { get; set; }
 
         public DbSet<JobPost> JobPost { get; set; }
+
+        public DbSet<JobPostActivity> JobPostActivity { get; set; }
+
+        public DbSet<JobSkill> JobSkill { get; set; }
+
+        public DbSet<Notification> Notification { get; set; }
+
+        public DbSet<UserNotification> UserNotification { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<JobPostActivity>().HasRequired(jpa => jpa.Seeker).WithMany().WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserNotification>().HasRequired(un => un.User).WithMany().WillCascadeOnDelete(false);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
