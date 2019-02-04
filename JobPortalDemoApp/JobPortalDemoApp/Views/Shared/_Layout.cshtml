@@ -35,43 +35,51 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (isHRUser)
-    {
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        Jobs
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Add Job", "AddJobPost", "Job")</li>
-                        <li>@Html.ActionLink("Jobs Listing", "JobsListing", "Job")</li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        Candidates
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Candidates Listing", "CandidatesListing", "Job")</li>
-                    </ul>
-                </li>
-}
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Jobs
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Add Job", "AddJobPost", "Job")</li>
+                                <li>@Html.ActionLink("Jobs Listing", "JobsListing", "Job")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Candidates
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Candidates Listing", "CandidatesListing", "Job")</li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (HttpContext.Current.Request.IsAuthenticated)
                     {
-                        <li><a href="#"><i id="notification" class="glyphicon glyphicon-arrow-down" data-toggle="popover" title="Notifications" data-placement="bottom"></i></a></li>
+                        if (!isHRUser)
+                        {
+                            <li class="notifications">
+                                <a href="#"><i id="notification" class="glyphicon glyphicon-bell" data-toggle="popover"
+                                    data-placement="bottom"></i><span class="badge notifications-count hide"></span>
+                                </a>
+                            </li>
+                        }
+
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                @User.Identity.Name
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                @*<li>@Html.ActionLink("My History", "Index", "History")</li>*@
-                                <li>@Html.ActionLink("Log Out", "LogOut", "Account")</li>
-                            </ul>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            @User.Identity.Name
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @*<li>@Html.ActionLink("My History", "Index", "History")</li>*@
+                            <li>@Html.ActionLink("Log Out", "LogOut", "Account")</li>
+                        </ul>
                         </li>
-                    }
+                     }
                     else
                     {
                         <li>@Html.ActionLink("Log In", "LogIn", "Account")</li>
@@ -94,29 +102,42 @@
     <script src="~/Scripts/jquery-1.12.4.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 
-    <script>
-        $(function () {
-            var popoverContent;
+
+    @if (HttpContext.Current.Request.IsAuthenticated && !isHRUser)
+     {
+     <script>
+            $(function() {
+                var popoverContent;
             $.ajax({
-                url: '@Url.Action("GetAllUserNotifications", "N")',
+                    url: '@Url.Action("GetAllUserNotifications", "N")',
                 type: 'GET',
                 dataType: 'json',
-                success: function (data) {
-                    alert(data);
-                    popoverContent = data;
+                success: function(data) {
+                    alert(data.length);
+                    $(".notifications-count").text(data.length).removeClass("hide");
+                        popoverContent = data;
                 },
-                error: function () {
-                    alert("Something went wrong!");
+                error: function() {
+                        alert("Something went wrong!");
                 }
             });
 
+                
+
             $("#notification").popover({
                 trigger: 'hover',
-                html: true
+                html: true,
+                title: "Notifications",
+                content: function () {
+                    return "HI";
+                }
             });
-        });
-    </script>
+            });
+     </script>
+     }
 
-    @RenderSection("scripts", false)
-</body>
+        
+
+        @RenderSection("scripts", false)
+    </body>
 </html>
