@@ -48,11 +48,11 @@
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                Candidates
+                                Job Seekers
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Candidates Listing", "CandidatesListing", "Job")</li>
+                                <li>@Html.ActionLink("Seekers Listing", "CandidatesListing", "Job")</li>
                             </ul>
                         </li>
                     }
@@ -106,33 +106,78 @@
     @if (HttpContext.Current.Request.IsAuthenticated && !isHRUser)
      {
      <script>
-            $(function() {
-                var popoverContent;
-            $.ajax({
-                    url: '@Url.Action("GetAllUserNotifications", "N")',
+            $(function () {
+             $("#notification").popover({
+                 html: true,
+                 title: "Notifications"
+                 //content: popoverContent
+             });
+             var popoverContent;
+             var notificationIds = [];
+             var getNotifications = function () {
+                 $.ajax({
+                 url: '@Url.Action("GetAllUserNotifications", "N")',
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    alert(data.length);
-                    $(".notifications-count").text(data.length).removeClass("hide");
-                        popoverContent = data;
+                    //alert(data.length);
+                    if (data.length == 0) {
+                        popoverContent = "There are no unread notifications.";
+                    }
+                    else {
+                        $(".notifications-count").text(data.length).removeClass("hide");
+                        popoverContent = "<ul>";
+                        $.each(data, function (i, notification) {
+                            notificationIds.push(notification.Id);
+                            if (notification.NotificationType == 1) {
+                                popoverContent += "<li>" + "A new job has been posted on " + notification.PostedOn + ". Title: " + notification.JobTitle + "</li>";
+                            }
+                        });
+
+                        popoverContent += "</ul>";
+                    }
+
+                    $(".popover-content").html(popoverContent);
+
                 },
                 error: function() {
                         alert("Something went wrong!");
                 }
             });
+             };
+             getNotifications();
 
-                
+             $('#notification').on('show.bs.popover', function () {
+                 // do something…
+                 getNotifications();
+             });
 
-            $("#notification").popover({
-                trigger: 'hover',
-                html: true,
-                title: "Notifications",
-                content: function () {
-                    return "HI";
-                }
-            });
-            });
+             $('#notification').on('hidden.bs.popover', function () {
+                 // do something…
+
+                 if (notificationIds.length == 0) {
+                     return;
+                 }
+
+                 $.ajax({
+                     url: '@Url.Action("MakeNotificationsAsRead", "N")',
+                     type: 'POST',
+                     //data: JSON.stringify(notificationIds),
+                     data: { 'notificationIds': notificationIds },
+                     dataType: 'json',
+                     success: function (data) {
+                         $(".notifications-count").text("").addClass("hide");
+                         popoverContent = "There are no unread notifications.";
+                         $(".popover-content").text(popoverContent);
+                     },
+                     error: function () {
+                         alert("Something went wrong!");
+                     }
+                 });
+             });
+
+
+         });
      </script>
      }
 
