@@ -10,14 +10,17 @@ namespace DataLayer.Entities
 {
     public class UserNotification
     {
-        [Key]
         [Column(Order = 1)]
+        public int Id { get; set; }
+
+  
+        [Column(Order = 2)]
         public int UserId { get; set; }
 
         public User User { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
+    
+        [Column(Order = 3)]
         public int NotificationId { get; set; }
 
         public Notification Notification { get; set; }
