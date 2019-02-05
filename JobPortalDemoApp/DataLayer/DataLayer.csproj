@@ -132,6 +132,10 @@
     <Compile Include="Migrations\201902041802077_AddedTypeIdtoEduDetailEntity.Designer.cs">
       <DependentUpon>201902041802077_AddedTypeIdtoEduDetailEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902050738244_AddedIdToUNEntity.cs" />
+    <Compile Include="Migrations\201902050738244_AddedIdToUNEntity.Designer.cs">
+      <DependentUpon>201902050738244_AddedIdToUNEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -193,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902041802077_AddedTypeIdtoEduDetailEntity.resx">
       <DependentUpon>201902041802077_AddedTypeIdtoEduDetailEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902050738244_AddedIdToUNEntity.resx">
+      <DependentUpon>201902050738244_AddedIdToUNEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
