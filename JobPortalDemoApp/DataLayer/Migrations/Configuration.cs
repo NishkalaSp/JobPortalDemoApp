@@ -26,8 +26,8 @@ namespace DataLayer.Migrations
                 );
 
             context.EducationTypes.AddOrUpdate( e => e.Id,
-                new EducationType() { Type = "Full-Time" },
-                new EducationType() { Type = "Correspondence" } 
+                new EducationType() { Name = "Full-Time" },
+                new EducationType() { Name = "Correspondence" } 
                 );
 
             context.Role.AddOrUpdate( u => u.Id,

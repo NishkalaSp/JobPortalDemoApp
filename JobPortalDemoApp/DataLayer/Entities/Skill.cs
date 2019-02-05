@@ -8,11 +8,11 @@ namespace DataLayer.Entities
 
         public string Name { get; set; }
 
-        public ICollection<ExperienceDetails> ExperienceDetails { get; set; }
+        //public ICollection<ExperienceDetails> ExperienceDetails { get; set; }
 
-        public Skill()
-        {
-            ExperienceDetails = new HashSet<ExperienceDetails>();
-        }
+        //public Skill()
+        //{
+        //    ExperienceDetails = new HashSet<ExperienceDetails>();
+        //}
     }
 }
