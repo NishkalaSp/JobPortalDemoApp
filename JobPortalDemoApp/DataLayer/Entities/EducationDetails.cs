@@ -20,7 +20,9 @@ namespace DataLayer.Entities
 
         public decimal Percentage { get; set; }
 
-        public string Type { get; set; }
+        public int EducationTypeId { get; set; }
+
+        public EducationType EducationType { get; set; }
 
         
 
@@ -35,7 +37,7 @@ namespace DataLayer.Entities
     {
         public int Id { get; set; }
 
-        public string Type { get; set; }
+        public string Name { get; set; }
     }
 
     

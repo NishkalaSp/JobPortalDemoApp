@@ -202,8 +202,12 @@ namespace JobPortalDemoApp.Controllers
                 Id = c.Seeker.Id,
                 Email = c.Seeker.Email,
                 ContactNumber = c.Seeker.ContactNumber,
-                AppliedOn = c.AppliedOn,
-                Skills = ""
+                AppliedOn = c.AppliedOn.ToString("MMM d yyyy"),
+                Skills = string.Join(",", _context.UserExperienceSkill.Include(ues => ues.Skill)
+                                                      .Where(ues => ues.SeekerId == c.Seeker.Id)
+                                                      .Select(ues => ues.Skill.Name)
+                                                      .Distinct()
+                                                      .ToList())
             });
 
             return Json(new { data = data, recordsTotal = data.Count() }, JsonRequestBehavior.AllowGet);
@@ -250,8 +254,8 @@ namespace JobPortalDemoApp.Controllers
             
 
             var user = GetUserById(seekerId); //if user == null?
-            var eduDetail = _context.EducationDetails.Where(ed => ed.Seeker.Id == seekerId).SingleOrDefault();
-            var expDetails = _context.ExperienceDetails.Include("Skills").Where(exd => exd.Seeker.Id == seekerId).ToList();
+            var eduDetail = _context.EducationDetails.Include(ed => ed.EducationType).Where(ed => ed.Seeker.Id == seekerId).FirstOrDefault();
+            var expDetails = _context.ExperienceDetails.Where(exd => exd.Seeker.Id == seekerId).ToList();
 
             var userDetail = new UserDetail();
             userDetail.PersonalDetail.FirstName = user.FirstName;
@@ -259,11 +263,15 @@ namespace JobPortalDemoApp.Controllers
             userDetail.PersonalDetail.Email = user.Email;
             userDetail.PersonalDetail.ContactNumber = user.ContactNumber;
 
-            userDetail.EducationDetail.HighestQualification = eduDetail.HighestQualification;
-            userDetail.EducationDetail.InstituteOrUniversityName = eduDetail.InstituteOrUniversityName;
-            userDetail.EducationDetail.MajorBranch = eduDetail.MajorBranch;
-            userDetail.EducationDetail.Percentage = eduDetail.Percentage;
-            userDetail.EducationDetail.Type = eduDetail.Type;
+            if (eduDetail != null)
+            {
+                userDetail.EducationDetail.HighestQualification = eduDetail.HighestQualification;
+                userDetail.EducationDetail.InstituteOrUniversityName = eduDetail.InstituteOrUniversityName;
+                userDetail.EducationDetail.MajorBranch = eduDetail.MajorBranch;
+                userDetail.EducationDetail.Percentage = eduDetail.Percentage;
+                userDetail.EducationDetail.Type = eduDetail.EducationType.Name;
+            }
+            
 
             foreach (var exd in expDetails)
             {
@@ -274,7 +282,9 @@ namespace JobPortalDemoApp.Controllers
                     StartDate = exd.StartDate,
                     EndDate = exd.EndDate,
                     Type = exd.Type,
-                    Skills = string.Join(",", exd.Skills.Select(s => s.Name).ToList()) //?
+                    Skills = string.Join(",", _context.UserExperienceSkill.Include(ues => ues.Skill)
+                                                      .Where(ues => ues.SeekerId == user.Id 
+                                                      && ues.ExperienceDetailId == exd.Id ).Select(ues => ues.Skill.Name).ToList()) //?
                 };
                 userDetail.ExperienceDetails.Add(experienceDetailModel);
             }

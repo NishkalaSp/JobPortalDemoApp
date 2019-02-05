@@ -28,13 +28,11 @@ namespace DataLayer.Entities
 
         public string Country { get; set; }
 
-        //public string[] SkillId { get; set; }
+        //public ICollection<Skill> Skills { get; set; }
 
-        public ICollection<Skill> Skills { get; set; }
-
-        public ExperienceDetails()
-        {
-            Skills = new HashSet<Skill>();
-        }
+        //public ExperienceDetails()
+        //{
+        //    Skills = new HashSet<Skill>();
+        //}
     }
 }
