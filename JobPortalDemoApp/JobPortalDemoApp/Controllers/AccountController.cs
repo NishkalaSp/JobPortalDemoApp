@@ -104,7 +104,7 @@ namespace JobPortalDemoApp.Controllers
                 Password = rfm.PersonalDetail.Password, //must encrypt
                 Email = rfm.PersonalDetail.Email,
                 ContactNumber = rfm.PersonalDetail.ContactNumber,
-                Role = _context.Role.Single( ut => ut.Type == "JobSeeker"),
+                Role = _context.Role.First( ut => ut.Type == "JobSeeker"),
                 ResumeFileName = fileName,
                 DOB = rfm.PersonalDetail.DOB,
                 CreatedDate = DateTime.Now
@@ -124,11 +124,19 @@ namespace JobPortalDemoApp.Controllers
                     EndDate = ed.EndDate,
                     Type = ed.Type
                 };
+                _context.ExperienceDetails.Add(experienceDetail);
+                _context.SaveChanges();
+
                 foreach (var skill in ed.SkillId)
                 {
-                    experienceDetail.Skills.Add(new Skill() { Id = Convert.ToInt32(skill) });
+                    //experienceDetail.Skills.Add(new Skill() { Id = Convert.ToInt32(skill) });
+                    _context.UserExperienceSkill.Add(new UserExperienceSkill {
+                            SeekerId = user.Id,
+                            ExperienceDetailId = experienceDetail.Id,
+                            SkillId = Convert.ToInt32(skill)
+                    });
                 }
-                _context.ExperienceDetails.Add(experienceDetail);
+                
             }
 
             var eduDetail = new EducationDetails()
@@ -138,7 +146,7 @@ namespace JobPortalDemoApp.Controllers
                 InstituteOrUniversityName = rfm.EducationDetail.InstituteOrUniversityName,
                 MajorBranch = rfm.EducationDetail.MajorBranch,
                 Percentage = rfm.EducationDetail.Percentage,
-                Type = rfm.EducationDetail.Type
+                EducationTypeId = Convert.ToInt32(rfm.EducationDetail.Type) 
             };
             _context.EducationDetails.Add(eduDetail);
 

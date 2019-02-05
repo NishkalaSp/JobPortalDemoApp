@@ -31,6 +31,8 @@ namespace DataLayer
 
         public DbSet<Skill> Skills { get; set; }
 
+        public DbSet<UserExperienceSkill> UserExperienceSkill { get; set; }
+
         public DbSet<JobPost> JobPost { get; set; }
 
         public DbSet<JobPostActivity> JobPostActivity { get; set; }

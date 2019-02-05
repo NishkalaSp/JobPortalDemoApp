@@ -57,6 +57,7 @@
     <Compile Include="Entities\Notification.cs" />
     <Compile Include="Entities\Skill.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserExperienceSkill.cs" />
     <Compile Include="Entities\UserNotification.cs" />
     <Compile Include="JPDbContext.cs" />
     <Compile Include="Migrations\201901170829050_initial.cs" />
@@ -123,6 +124,14 @@
     <Compile Include="Migrations\201902010828032_AddedNotificationAndUNEntity.Designer.cs">
       <DependentUpon>201902010828032_AddedNotificationAndUNEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902041643044_AddedUserExpSkillEntity.cs" />
+    <Compile Include="Migrations\201902041643044_AddedUserExpSkillEntity.Designer.cs">
+      <DependentUpon>201902041643044_AddedUserExpSkillEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902041802077_AddedTypeIdtoEduDetailEntity.cs" />
+    <Compile Include="Migrations\201902041802077_AddedTypeIdtoEduDetailEntity.Designer.cs">
+      <DependentUpon>201902041802077_AddedTypeIdtoEduDetailEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -178,6 +187,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902010828032_AddedNotificationAndUNEntity.resx">
       <DependentUpon>201902010828032_AddedNotificationAndUNEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041643044_AddedUserExpSkillEntity.resx">
+      <DependentUpon>201902041643044_AddedUserExpSkillEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041802077_AddedTypeIdtoEduDetailEntity.resx">
+      <DependentUpon>201902041802077_AddedTypeIdtoEduDetailEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
