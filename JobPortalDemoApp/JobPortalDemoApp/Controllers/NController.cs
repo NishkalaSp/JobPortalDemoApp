@@ -29,39 +29,13 @@ namespace JobPortalDemoApp.Controllers
             var username = HttpContext.User.Identity.Name;
             var user = _context.User.Where(u => u.Email == username).FirstOrDefault();
 
-            var userNotifications = _context.UserNotification.Include(un => un.Notification.JobPost).Where(un => un.UserId == user.Id && un.IsRead == false).ToList();
+            var notifications = _context.UserNotification.Include(un => un.Notification).Where(un => un.UserId == user.Id).ToList();
 
-            var data = userNotifications.Select(n => new {
-                Id = n.Id,
-                NotificationType = n.Notification.Type,
-                PostedOn = n.Notification.JobPost.PostedOn.ToString("MMM d yyyy"),
-                JobTitle = n.Notification.JobPost.Title
+            var data = notifications.Select(n => new {
+                NotificationType = n.Notification.Type
             }).ToList();
 
             return Json(data, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public ActionResult MakeNotificationsAsRead(int[] notificationIds)
-        {
-            var username = HttpContext.User.Identity.Name;
-            var user = _context.User.Where(u => u.Email == username).FirstOrDefault();
-
-            var userNotifications = _context.UserNotification.Where(un => un.UserId == user.Id && un.IsRead == false).ToList();
-
-            foreach (var notification in userNotifications)
-            {
-                foreach (var nId in notificationIds)
-                {
-                    if (nId == notification.Id)
-                    {
-                        notification.IsRead = true;
-                    }
-                }
-            }
-            _context.SaveChanges();
-
-            return Json("success", JsonRequestBehavior.AllowGet);
         }
     }
 }

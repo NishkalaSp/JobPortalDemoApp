@@ -34,7 +34,7 @@
                 <div id="edit-job-post-container"></div>
 
 
-              
+                <p>Hi!</p>
             </div>
 
         </div>
@@ -43,7 +43,6 @@
 
 @section scripts{
     <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
-<script src="~/Scripts/chosen.jquery.min.js"></script>
     <script>
         $(function () {
             var jobsListingTable = $("#jobs-listing-table");
@@ -105,7 +104,6 @@
                 dataType: 'html',
                 success: function (data) {
                     jobPostDiv.append(data);
-                    $(".chosen-select").chosen({ width: "50%" });
                     $(href).modal('toggle');
                 },
                 error: function () {

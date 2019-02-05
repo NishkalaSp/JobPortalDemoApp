@@ -123,10 +123,6 @@
     <Compile Include="Migrations\201902010828032_AddedNotificationAndUNEntity.Designer.cs">
       <DependentUpon>201902010828032_AddedNotificationAndUNEntity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902040629184_changedUN.cs" />
-    <Compile Include="Migrations\201902040629184_changedUN.Designer.cs">
-      <DependentUpon>201902040629184_changedUN.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -182,9 +178,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902010828032_AddedNotificationAndUNEntity.resx">
       <DependentUpon>201902010828032_AddedNotificationAndUNEntity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902040629184_changedUN.resx">
-      <DependentUpon>201902040629184_changedUN.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
