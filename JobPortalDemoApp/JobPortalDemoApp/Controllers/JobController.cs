@@ -32,9 +32,13 @@ namespace JobPortalDemoApp.Controllers
 
         public ActionResult AddJobPost()
         {
-            var jobPostModel = new JobPostModel();
-            jobPostModel.ActionName = "AddJobPost";
-            ViewBag.SkillList = _context.Skills.ToList();
+            var jobPostModel = new JobPostModel
+            {
+                ActionName = "AddJobPost",
+                Skills = _context.Skills.ToList(),
+                JobTypes = _context.JobTypes.ToList()
+            };
+            
             return View("JobPost", jobPostModel);
         }
 
@@ -49,9 +53,10 @@ namespace JobPortalDemoApp.Controllers
                     PostedOn = DateTime.Now,
                     IsActive = true,
                     Title = jp.Title,
+                    JobTypeId = jp.JobTypeId,
                     JobBrief = jp.JobBrief,
                     Responsibilities = jp.Responsibilities,
-                    Requirements = jp.Requirements,
+                    Requirements = jp.Requirements
                 };
 
                 _context.JobPost.Add(jobPost);
@@ -99,17 +104,21 @@ namespace JobPortalDemoApp.Controllers
         {
             var jobPost = _context.JobPost.Where(jp => jp.Id == jobPostId).FirstOrDefault();
 
+
             var jobPostModel = new JobPostModel() {
                 JobPostId = jobPost.Id,
                 Title = jobPost.Title,
-                SkillIds = _context.JobSkill.Where(js => js.JobPostId == jobPost.Id).Select(js => js.SkillId).ToArray(),
+                Skills = _context.Skills.ToList(),
+                SkillIds = _context.JobSkill.Where(js => js.JobPostId == jobPost.Id).Select(js => js.SkillId).ToList(),
+                JobTypeId = jobPost.JobTypeId,
+                JobTypes = _context.JobTypes.ToList(),
                 JobBrief = jobPost.JobBrief,
                 Requirements = jobPost.Requirements,
                 Responsibilities = jobPost.Responsibilities,
                 ActionName = "EditJobPost"
             };
 
-            ViewBag.SkillList = _context.Skills.ToList();
+           
             return View("JobPost", jobPostModel);
         }
 
@@ -174,20 +183,24 @@ namespace JobPortalDemoApp.Controllers
 
         public ActionResult JobDetails(int jobId)
         {
-            var jobPost = _context.JobPost.Where(jp => jp.Id == jobId).FirstOrDefault();
+            var jobPost = _context.JobPost.Include(jp => jp.JobType).Where(jp => jp.Id == jobId).FirstOrDefault();
             if (jobPost == null)
             {
                 //return 
             }
 
             var skills = _context.JobSkill.Include(js => js.Skill).Where(js => js.JobPostId == jobPost.Id).Select(js => js.Skill.Name).ToList();
-            var jobPostModel = new JobPostModel {
+            var jobPostModel = new JobPostModel() {
                 JobPostId = jobPost.Id,
                 Title = jobPost.Title,
-                Skills = string.Join(", ", skills),
+                IsActive = jobPost.IsActive,
+                CreatedUserEmail = jobPost.CreatedBy.Email,
+                PostedOn = jobPost.PostedOn,              
                 JobBrief = jobPost.JobBrief,
                 Responsibilities = jobPost.Responsibilities,
-                Requirements = jobPost.Requirements
+                Requirements = jobPost.Requirements,
+                JobTypeId = jobPost.JobTypeId,
+                JobType = jobPost.JobType.Type
             };
 
             return View(jobPostModel);
