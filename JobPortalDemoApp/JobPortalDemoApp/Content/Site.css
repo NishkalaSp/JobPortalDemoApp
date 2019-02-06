@@ -16,6 +16,20 @@ textarea {
     max-width: 280px;
 }
 
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #222;
+    border-color: #080808;
+    color: #999;
+    text-align: center;
+}
+
+.footer > p {
+    margin: 10px 0;
+}
 
 .notifications{
     position: relative;

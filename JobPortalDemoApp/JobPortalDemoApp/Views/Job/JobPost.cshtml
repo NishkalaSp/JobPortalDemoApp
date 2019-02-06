@@ -10,11 +10,12 @@
     ViewBag.Title = "New Job Post";
 }
 <link href="~/Content/themes/base/chosen.min.css" rel="stylesheet" />
-<h2>Add New Job Post</h2>
+<div class="container">
+    <h3>Post A New Job</h3>
 
-@using (Html.BeginForm(Model.ActionName, "Job", FormMethod.Post, new { id = "add-jobpost-form"}))
-{
-    <div>
+    @using (Html.BeginForm(Model.ActionName, "Job", FormMethod.Post, new { id = "jobpost-form" }))
+    {
+
         <input type="hidden" id="JobPostId" name="JobPostId" value="@Model.JobPostId" />
         <input type="hidden" id="ActionName" name="ActionName" value="@Model.ActionName" />
         <div class="form-group">
@@ -28,14 +29,21 @@
             @Html.Label("Skills", htmlAttributes: new { @class = "control-label" })
             <div>
                 <select data-placeholder='Choose options...' multiple="multiple" class='form-control chosen-select' name="SkillIds">
-                    @foreach (var item in (List<Skill>)ViewBag.SkillList)
+                    @foreach (var item in Model.Skills)
                     {
                         <option value='@item.Id'>@item.Name</option>
                     }
                 </select>
-            </div>   
+            </div>
         </div>
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobTypeId, htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.DropDownListFor(model => model.JobTypeId,
+                       new SelectList(Model.JobTypes, "Id", "Type"), "Choose an option..", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.JobTypeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.JobBrief, htmlAttributes: new { @class = "control-label" })
             <div>
@@ -58,13 +66,11 @@
             </div>
         </div>
 
-
-        <input type="reset" class="btn" value="Reset" />
         <input type="submit" class="btn btn-primary" value="Save" />
-
-    </div>
+        <input type="reset" class="btn" value="Reset" />
 
     }
+</div>
 
 @section scripts{
 

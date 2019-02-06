@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace JobPortalDemoApp.Service
 {
@@ -18,7 +19,9 @@ namespace JobPortalDemoApp.Service
 
         public User GetUserByEmail(string email)
         {
-            return _context.User.Where(u => u.Email.Equals(email)).FirstOrDefault();
+            return _context.User.Include(u => u.Role)
+                            .Where(u => u.Email.Equals(email))
+                            .FirstOrDefault();
         }
 
         public bool IsHRUser(string name)

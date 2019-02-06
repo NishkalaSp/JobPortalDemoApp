@@ -136,6 +136,10 @@
     <Compile Include="Migrations\201902050738244_AddedIdToUNEntity.Designer.cs">
       <DependentUpon>201902050738244_AddedIdToUNEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902052012253_AddedJobTypeToJobPostEntity.cs" />
+    <Compile Include="Migrations\201902052012253_AddedJobTypeToJobPostEntity.Designer.cs">
+      <DependentUpon>201902052012253_AddedJobTypeToJobPostEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -200,6 +204,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902050738244_AddedIdToUNEntity.resx">
       <DependentUpon>201902050738244_AddedIdToUNEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902052012253_AddedJobTypeToJobPostEntity.resx">
+      <DependentUpon>201902052012253_AddedJobTypeToJobPostEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

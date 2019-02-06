@@ -24,6 +24,10 @@ namespace DataLayer.Entities
 
         public string Title { get; set; }
 
+        public int JobTypeId { get; set; }
+
+        public JobType JobType { get; set; }
+
         public string JobBrief { get; set; }
 
         public string Responsibilities { get; set; }

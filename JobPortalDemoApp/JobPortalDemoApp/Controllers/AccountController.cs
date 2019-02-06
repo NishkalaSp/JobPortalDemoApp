@@ -50,10 +50,10 @@ namespace JobPortalDemoApp.Controllers
                 }
 
                 FormsAuthentication.SetAuthCookie(user.Email, false);
-                var hrUserType = _context.Role.First(r => r.Type == "HR"); 
-                if (user.Role == hrUserType)
+                //var hrUserType = _context.Role.First(r => r.Type == "HR"); 
+                if (user.Role.Type == "HR")
                 {
-                    return RedirectToAction("Search", "Job");
+                    return RedirectToAction("CandidatesListing", "Job");
                 }
 
                 return RedirectToAction("Index", "Home");
